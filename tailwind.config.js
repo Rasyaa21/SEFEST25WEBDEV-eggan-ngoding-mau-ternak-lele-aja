@@ -12,7 +12,13 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['SF Pro', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primaryColor: '#39A7FF',
+                secondaryColor: '#87C4FF',
+                lightBlueColor: '#E0F4FF',
+                creamColor: '#FFEED9'
             },
         },
     },

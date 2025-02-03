@@ -1,2 +1,24 @@
 @import "tailwindcss";
 @source "../views";
+
+
+@font-face {
+    font-family: 'SF Pro';
+    src: url('public/fonts/sf-pro-regular.OTF') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro';
+    src: url('public/fonts/sf-pro-bold.OTF') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro';
+    src: url('public/fonts/sf-pro-medium.OTF') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
