@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @source "../views";
-
+@plugin "tailwindcss-motion";
+@import "tailwindcss-intersect";
 
 @font-face {
     font-family: 'SF Pro';
@@ -21,4 +22,12 @@
     src: url('public/fonts/sf-pro-medium.OTF') format('opentype');
     font-weight: 500;
     font-style: normal;
+}
+
+@theme {
+    --color-primary: #39A7FF;
+    --color-secondary: #87C4FF;
+    --color-lightBlue: #E0F4FF;
+    --color-lightBlue2: #DFF7FF;
+    --color-cream: #FFEED9;
 }

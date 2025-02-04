@@ -15,12 +15,12 @@ export default {
                 sans: ['SF Pro', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primaryColor: '#39A7FF',
-                secondaryColor: '#87C4FF',
-                lightBlueColor: '#E0F4FF',
-                creamColor: '#FFEED9'
+                primary: '#39A7FF',
+                secondary: '#87C4FF',
+                lightBlue: '#E0F4FF',
+                cream: '#FFEED9'
             },
         },
     },
-    plugins: [],
+    plugins: [require('tailwind-motion'), require('tailwindcss-intersect')],
 };
