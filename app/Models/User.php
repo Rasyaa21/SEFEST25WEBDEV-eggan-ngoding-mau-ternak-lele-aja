@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'is_premium'
+    ];
+
+    protected $casts = [
+        'is_premium' => 'boolean'
     ];
 
     /**
@@ -44,5 +51,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function marketplaceTransactions(){
+        return $this->hasMany(MarketplaceTransaction::class);
+    }
+
+    public function ponds(){
+        return $this->hasMany(Pond::class);
+    }
+
+    public function academyTransactions(){
+        return $this->hasMany(AcademyTransaction::class);
     }
 }
