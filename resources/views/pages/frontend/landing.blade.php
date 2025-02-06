@@ -3,9 +3,9 @@
 @section('title', 'Marivora')
 
 @section('content')
-<section class="flex items-center justify-center w-full h-screen bg-lightBlue">
-    <div class="container flex flex-col items-center justify-center w-full h-full gap-6 lg:flex-row lg:items-center lg:justify-center lg:gap-36">
-        <div class="text-center lg:text-left motion-opacity-in-0 motion-translate-y-in-100">
+<section class="flex items-center justify-center w-full min-h-screen bg-lightBlue">
+    <div class="container flex flex-col items-center justify-center w-full h-full gap-6 mt-24 lg:flex-row lg:items-center lg:justify-center lg:gap-36 lg:mt-0 md:mt-0">
+        <div class="p-4 text-center lg:text-left motion-opacity-in-0 motion-translate-y-in-100 md:p-0 lg:p-0">
             <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text ">
                 Membantu Para Peternak Ikan <br> Dengan Marivora
             </h1>
@@ -16,7 +16,7 @@
                 Ayo Mulai
             </button>
         </div>
-        <div class="relative my-4 mt-4 lg:mt-0 lg:ml-4 lg:p-0 motion-opacity-in-0 motion-translate-y-in-100">
+        <div class="relative my-4 mt-4 lg:mt-0 lg:ml-4 lg:p-0 motion-opacity-in-0 motion-translate-y-in-100 md:p-0">
             <img src="{{ asset('assets/images/illustrasi-2.png') }}" alt="Descriptive Alt Text" class="absolute top-0 left-0 w-full h-full origin-bottom shadow-xl -rotate-6 rounded-2xl" style="width: 500px; height: 500px; object-fit: fill; opacity: 0.5;">
             <img src="{{ asset('assets/images/ilustrasi.png') }}" alt="Descriptive Alt Text" class="relative w-full h-full transition-transform duration-300 origin-bottom transform shadow-xl rounded-2xl hover:scale-105 hover:motion-rotate-out-3" style="width: 500px; height: 500px; object-fit: fill;">
         </div>
@@ -153,7 +153,7 @@
             Apa Kata Mereka Tentang Marivora
         </h2>
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-3 md:gap-8 lg:mt-24">
-          <blockquote class="p-6 transition-all ease-in-out delay-100 translate-y-10 rounded-lg shadow-xl opacity-0 duration-600 bg-gray-50 sm:p-8 section-hidden">
+          <blockquote class="p-6 transition-all ease-in-out delay-100 translate-y-10 shadow-xl opacity-0 rounded-xl duration-600 bg-gray-50 sm:p-8 section-hidden">
             <div class="flex items-center gap-4">
               <img
                 alt=""
@@ -224,7 +224,7 @@
             </p>
           </blockquote>
 
-          <blockquote class="p-6 transition-all ease-in-out delay-150 translate-y-10 rounded-lg shadow-xl opacity-0 duration-650 bg-gray-50 sm:p-8 section-hidden">
+          <blockquote class="p-6 transition-all ease-in-out delay-150 translate-y-10 shadow-xl opacity-0 rounded-xl duration-650 bg-gray-50 sm:p-8 section-hidden">
             <div class="flex items-center gap-4">
               <img
                 alt=""
@@ -295,7 +295,7 @@
             </p>
         </blockquote>
 
-        <blockquote class="p-6 transition-all duration-700 ease-in-out delay-200 translate-y-10 rounded-lg shadow-xl opacity-0 bg-gray-50 sm:p-8 section-hidden">
+        <blockquote class="p-6 transition-all duration-700 ease-in-out delay-200 translate-y-10 shadow-xl opacity-0 rounded-xl bg-gray-50 sm:p-8 section-hidden">
             <div class="flex items-center gap-4">
             <img
                 alt=""

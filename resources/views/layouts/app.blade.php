@@ -10,8 +10,10 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    @yield('content')
     @include('includes.navbar')
+    <div class="my-auto lg:mt-4 md:mt-4 sm:mt-16">
+        @yield('content')
+    </div>
 </body>
 <footer>
     <section class="bg-white">
