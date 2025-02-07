@@ -8,12 +8,17 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @stack('styles')
+    @livewireStyles
 </head>
 <body>
     @include('includes.navbar')
     <div class="my-auto lg:mt-4 md:mt-4 sm:mt-16">
         @yield('content')
     </div>
+    @stack('scripts')
+    @livewireScripts
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 <footer>
     <section class="bg-white">

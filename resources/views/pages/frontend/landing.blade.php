@@ -5,7 +5,7 @@
 @section('content')
 <section class="flex items-center justify-center w-full min-h-screen bg-lightBlue">
     <div class="container flex flex-col items-center justify-center w-full h-full gap-6 mt-24 lg:flex-row lg:items-center lg:justify-center lg:gap-36 lg:mt-0 md:mt-0">
-        <div class="p-4 text-center lg:text-left motion-opacity-in-0 motion-translate-y-in-100 md:p-0 lg:p-0">
+        <div class="p-4 text-center lg:text-left motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md md:p-0 lg:p-0">
             <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text ">
                 Membantu Para Peternak Ikan <br> Dengan Marivora
             </h1>
@@ -16,7 +16,7 @@
                 Ayo Mulai
             </button>
         </div>
-        <div class="relative my-4 mt-4 lg:mt-0 lg:ml-4 lg:p-0 motion-opacity-in-0 motion-translate-y-in-100 md:p-0">
+        <div class="relative my-4 mt-4 lg:mt-0 lg:ml-4 lg:p-0 motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md md:p-0">
             <img src="{{ asset('assets/images/illustrasi-2.png') }}" alt="Descriptive Alt Text" class="absolute top-0 left-0 w-full h-full origin-bottom shadow-xl -rotate-6 rounded-2xl" style="width: 500px; height: 500px; object-fit: fill; opacity: 0.5;">
             <img src="{{ asset('assets/images/ilustrasi.png') }}" alt="Descriptive Alt Text" class="relative w-full h-full transition-transform duration-300 origin-bottom transform shadow-xl rounded-2xl hover:scale-105 hover:motion-rotate-out-3" style="width: 500px; height: 500px; object-fit: fill;">
         </div>

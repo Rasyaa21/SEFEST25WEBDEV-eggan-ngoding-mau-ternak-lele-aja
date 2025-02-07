@@ -22,7 +22,7 @@
                     <a href="{{ route('home') }}" class="block px-4 py-3 text-white transition duration-500 ease-in-out transform rounded-md bg-primary md:bg-transparent md:text-black md:p-0 md:dark:text-primary lg:hover:bg-transparent lg:hover:text-black hover:scale-105">Home</a>
                 </li>
                 <li>
-                    <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">KolamCerdas</a>
+                    <a href="{{ route('page.kolam.cerdas') }}" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">KolamCerdas</a>
                 </li>
                 <li>
                     <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">TanyaKolam</a>
