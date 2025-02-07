@@ -9,6 +9,9 @@
 - copy .env.example to .env
 - run `` php artisan key:generate ``
 - set up your database in the .env
+- add openai API KEY and ORANIZATION to your env
+- `` OPENAI_API_KEY= ``
+- ``OPENAI_ORGANIZATION=`` 
 - run `` php artisan migrate --seed ``
 - run `` php artisan storage:link ``
 - run `` php artisan serve ``
