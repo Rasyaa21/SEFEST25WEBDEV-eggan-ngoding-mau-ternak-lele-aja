@@ -2,14 +2,7 @@
 
 @section('title', 'Marivora - Tanya Kolam')
 
-@push('styles')
-    @livewireStyles
-@endpush
 
-@push('scripts')
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    @livewireScripts
-@endpush
 
 @section('content')
 <section x-data class="flex flex-col items-center justify-start w-full min-h-screen bg-lightBlue">

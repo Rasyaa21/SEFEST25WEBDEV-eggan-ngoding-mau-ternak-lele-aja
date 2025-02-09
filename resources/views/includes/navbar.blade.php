@@ -16,22 +16,22 @@
                 </svg>
             </button>
         </div>
-        <div id="navbar-sticky" class="absolute left-0 w-full px-4 pt-4 pb-6 transition-all duration-300 transform scale-95 bg-gray-100 border border-white rounded-lg shadow-lg opacity-0 top-16 md:relative md:top-0 md:flex md:w-auto md:opacity-100 md:scale-100 md:bg-transparent md:border-0 md:shadow-none sm:mx-4 md:mx-6">
+        <div id="navbar-sticky" class="absolute left-0 hidden w-full px-4 pt-4 pb-6 transition-all duration-300 ease-in-out transform scale-95 bg-gray-100 border border-white rounded-lg shadow-lg opacity-0 top-16 md:relative md:top-0 md:flex md:w-auto md:opacity-100 md:scale-100 md:bg-transparent md:border-0 md:shadow-none sm:mx-4 md:mx-6">
             <ul class="flex flex-col font-medium md:flex-row md:space-x-8">
-                <li>
-                    <a href="{{ route('home') }}" class="block px-4 py-3 text-white transition duration-500 ease-in-out transform rounded-md bg-primary md:bg-transparent md:text-black md:p-0 md:dark:text-primary lg:hover:bg-transparent lg:hover:text-black hover:scale-105">Home</a>
+                <li class="w-full md:w-auto">
+                    <a href="{{ route('home') }}" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Home</a>
                 </li>
-                <li>
-                    <a href="{{ route('page.kolam.cerdas') }}" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">KolamCerdas</a>
+                <li class="w-full md:w-auto">
+                    <a href="{{ route('page.kolam.cerdas') }}" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">KolamCerdas</a>
                 </li>
-                <li>
-                    <a href="{{ route('page.tanya.kolam') }}" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">TanyaKolam</a>
+                <li class="w-full md:w-auto">
+                    <a href="{{ route('page.tanya.kolam') }}" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">TanyaKolam</a>
                 </li>
-                <li>
-                    <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">Academy</a>
+                <li class="w-full md:w-auto">
+                    <a href="#" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Academy</a>
                 </li>
-                <li>
-                    <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">Marketplace</a>
+                <li class="w-full md:w-auto">
+                    <a href="#" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Marketplace</a>
                 </li>
             </ul>
         </div>
@@ -40,13 +40,13 @@
 <script>
     function toggleDropdown() {
         var element = document.getElementById("navbar-sticky");
-
-        if (element.classList.contains("opacity-0")) {
-            element.classList.remove("opacity-0", "scale-95");
-            element.classList.add("opacity-100", "scale-100");
+        
+        if (element.classList.contains("hidden")) {
+            element.classList.remove("hidden", "opacity-0", "scale-95");
+            element.classList.add("block", "opacity-100", "scale-100");
         } else {
-            element.classList.remove("opacity-100", "scale-100");
-            element.classList.add("opacity-0", "scale-95");
+            element.classList.remove("block", "opacity-100", "scale-100");
+            element.classList.add("hidden", "opacity-0", "scale-95");
         }
     }
 </script>

@@ -29,27 +29,16 @@ class TanyaKolamLivewire extends Component
     {
         $this->validate(['body' => 'required']);
 
-        // Store message and clear input
         $userMessage = $this->body;
         $this->body = '';
-
-        // Add user message immediately
         $this->messages[] = [
             'role' => 'user',
             'content' => $userMessage
         ];
 
-        // Force an update to show user message
         $this->dispatch('chat-updated');
 
-        // Set processing state
-        $this->isProcessing = true;
-
         try {
-            // Delay to ensure user message is displayed
-            usleep(500000); // 0.5 second delay
-
-            // Get AI response
             $stream = $this->rekomRepo->chatbot($userMessage);
             $response = '';
 
@@ -59,20 +48,21 @@ class TanyaKolamLivewire extends Component
                 }
             }
 
-            // Add AI response as a single message with newline characters separating points
+            // Add delay then show AI response
+            usleep(500000); // 0.5s delay
+
             $this->messages[] = [
                 'role' => 'assistant',
                 'content' => $response
             ];
+
+            $this->dispatch('chat-updated');
 
         } catch (\Exception $e) {
             $this->messages[] = [
                 'role' => 'assistant',
                 'content' => 'Error: ' . $e->getMessage()
             ];
-        } finally {
-            $this->isProcessing = false;
-            $this->dispatch('chat-updated');
         }
     }
 
