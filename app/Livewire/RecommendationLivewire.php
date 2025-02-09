@@ -81,7 +81,6 @@ class RecommendationLivewire extends Component
 
     public function submit()
     {
-        $this->showRecommendation = false;
         $this->validate();
         try {
             $response = $this->rekomRepo->recommendation([
@@ -91,6 +90,7 @@ class RecommendationLivewire extends Component
                 'height' => $this->height,
                 'management' => $this->management,
             ]);
+            $this->showRecommendation = true;
 
             $metrics = $this->parseAIResponse($response);
             $this->temperature = $metrics['temperature'] ?? '-';
@@ -99,7 +99,6 @@ class RecommendationLivewire extends Component
             $this->phLevel = $metrics['phLevel'] ?? '-';
             $this->salinity = $metrics['salinity'] ?? '-';
             $this->recommendation = $metrics['managementRecommendation'];
-            $this->showRecommendation = true;
             Log::info("berhasil");
         } catch (\Exception $e) {
             Log::error('Error processing recommendation: ' . $e->getMessage());

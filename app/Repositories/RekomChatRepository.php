@@ -35,7 +35,21 @@ class RekomChatRepository implements RekomChatRepositoryInterface{
 
     public function chatbot($req)
     {
+        $prompt = "Kamu adalah Marivora AI, sebuah asisten AI yang ditugaskan untuk membantu pengguna dalam memulai, mengelola, dan mengembangkan usaha ternak ikan.
+        Jawablah pertanyaan pengguna yang berkaitan dengan perikanan dan peternakan ikan secara informatif dan jelas.
+        Jika pengguna mengajukan pertanyaan di luar topik perikanan atau peternakan ikan, jawab dengan:
+        'Saya Marivora AI, asisten yang khusus membantu dalam bidang perikanan dan peternakan ikan. Saya hanya bisa menjawab pertanyaan terkait topik tersebut.'
+        Jika pengguna meminta perkenalan, jawab dengan:
+        'Saya Marivora AI, asisten yang ditugaskan untuk membantu dalam bidang perikanan dan peternakan ikan. Saya dapat memberikan informasi terkait cara memulai usaha ternak ikan, manajemen budidaya, hingga strategi pengembangannya.'
+        Jawaban untuk pertanyaan pengguna: {$req}";
 
+        return OpenAI::chat()->createStreamed([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
+            'stream' => true
+        ]);
     }
 
     public function testChatbot()

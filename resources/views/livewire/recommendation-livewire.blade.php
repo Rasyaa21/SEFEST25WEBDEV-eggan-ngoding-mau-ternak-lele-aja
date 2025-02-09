@@ -3,12 +3,13 @@
     <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
         Kolam Cerdas
     </h1>
-    <div class="justify-center container lg:max-w-1/3 md:max-w-1/2 max-w-3/4 lg:h-[450px] md:h-[400px] h-[450px] bg-white rounded-2xl shadow-2xl mt-12 motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md delay-100 p-6 flex flex-col">
+    <div class="container justify-center w-full max-w-xl lg:h-[450px] md:h-[400px] h-[450px] bg-white rounded-2xl shadow-2xl mt-12 motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md delay-100 p-6 flex flex-col">
         <form wire:submit.prevent="submit" class="flex flex-col">
             <div class="mb-6">
                 <label for="fish" class="block mb-2 text-sm font-bold text-gray-700">Ikan Apa Yang Ingin Diternak</label>
                 <input type="text" id="fish" wire:model.defer="fish" placeholder="Lele"
-                    class="w-full px-3 py-2.5 leading-tight text-gray-700 border rounded-lg shadow appearance-none focus:outline-none focus:shadow-outline border-primary @error('fish') border-red-500 @enderror">
+                    class="w-full px-3 py-2.5 leading-tight text-gray-700 border rounded-lg shadow appearance-none focus:outline-none focus:shadow-outline border-primary @error('fish') border-red-500 @enderror"
+                    style="-webkit-appearance: none;">
                 @error('fish') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
             </div>
 
@@ -40,7 +41,7 @@
                 <label for="management" class="block mb-2 text-sm font-bold text-gray-700">Jenis Pengelolaan Kolam</label>
                 <select id="management" wire:model.defer="management"
                     class="w-full px-3 py-2.5 leading-tight text-gray-700 border rounded-lg shadow appearance-none focus:outline-none focus:shadow-outline border-primary @error('management') border-red-500 @enderror">
-                    <option value="" disabled selected>Pilih Jenis Pengelolaan</option>
+                    <option value="" selected>Pilih Jenis Pengelolaan</option>
                     <option value="tanah">Kolam Tanah</option>
                     <option value="terpal">Kolam Terpal</option>
                     <option value="bioflok">Bioflok</option>
@@ -63,7 +64,7 @@
             </button>
         </form>
     </div>
-
+    <div class="container flex flex-col justify-start w-full max-w-xl mt-12 mb-24 delay-100 bg-white shadow-2xl rounded-2xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md"
     <div class="container flex flex-col justify-start mt-12 mb-24 delay-100 bg-white shadow-2xl lg:max-w-1/3 md:max-w-3/4 max-w-3/4 rounded-2xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md"
         x-data
         x-show="$wire.showRecommendation"

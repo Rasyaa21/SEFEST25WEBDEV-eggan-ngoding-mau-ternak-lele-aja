@@ -2,7 +2,7 @@
 <nav class="fixed top-0 z-20 w-full bg-white border-b border-white dark:bg-white start-0 dark:border-white">
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto" onclick="route('home')">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">
+            <img src="{{ asset('assets/logo-cropped.svg') }}" class="h-8" alt="Flowbite Logo">
             <span class="self-center text-2xl font-semibold text-black dark:text-black">Marivora</span>
         </a>
         <div class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
@@ -25,7 +25,7 @@
                     <a href="{{ route('page.kolam.cerdas') }}" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">KolamCerdas</a>
                 </li>
                 <li>
-                    <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">TanyaKolam</a>
+                    <a href="{{ route('page.tanya.kolam') }}" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">TanyaKolam</a>
                 </li>
                 <li>
                     <a href="" class="block px-4 py-3 text-gray-900 transition duration-500 ease-in-out transform rounded-md hover:bg-primary hover:text-white hover:px-6 md:hover:bg-transparent md:hover:text-primary md:p-0 md:dark:hover:text-white dark:text-black dark:hover:bg-primary dark:hover:text-white lg:hover:bg-transparent lg:hover:text-black hover:scale-105">Academy</a>
