@@ -40,7 +40,7 @@
 <script>
     function toggleDropdown() {
         var element = document.getElementById("navbar-sticky");
-        
+
         if (element.classList.contains("hidden")) {
             element.classList.remove("hidden", "opacity-0", "scale-95");
             element.classList.add("block", "opacity-100", "scale-100");

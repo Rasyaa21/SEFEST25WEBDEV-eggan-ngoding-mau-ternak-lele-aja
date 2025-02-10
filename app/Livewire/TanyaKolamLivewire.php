@@ -29,8 +29,13 @@ class TanyaKolamLivewire extends Component
     {
         $this->validate(['body' => 'required']);
 
+        if (empty(trim($this->body))) {
+            return;
+        }
+
         $userMessage = $this->body;
         $this->body = '';
+
         $this->messages[] = [
             'role' => 'user',
             'content' => $userMessage
@@ -48,21 +53,18 @@ class TanyaKolamLivewire extends Component
                 }
             }
 
-            // Add delay then show AI response
-            usleep(500000); // 0.5s delay
-
             $this->messages[] = [
                 'role' => 'assistant',
                 'content' => $response
             ];
-
-            $this->dispatch('chat-updated');
 
         } catch (\Exception $e) {
             $this->messages[] = [
                 'role' => 'assistant',
                 'content' => 'Error: ' . $e->getMessage()
             ];
+        } finally {
+            $this->dispatch('chat-updated');
         }
     }
 
