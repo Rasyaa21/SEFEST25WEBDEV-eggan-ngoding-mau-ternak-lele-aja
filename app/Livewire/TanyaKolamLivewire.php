@@ -25,7 +25,7 @@ class TanyaKolamLivewire extends Component
         $this->rekomRepo = new RekomChatRepository();
     }
 
-    public function send()
+    public function submit()
     {
         $this->validate(['body' => 'required']);
 

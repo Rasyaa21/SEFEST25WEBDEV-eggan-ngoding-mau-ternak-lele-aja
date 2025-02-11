@@ -15,7 +15,7 @@
                 @foreach($messages as $index => $message)
                     @if($message['role'] === 'assistant')
                         <div class="flex justify-start" wire:key="assistant-{{ $index }}">
-                            <div class="p-4 bg-primary user-chat rounded-xl w-fit lg:max-w-3/5 max-w-4/5">
+                            <div class="p-4 bg-primary user-chat rounded-xl w-fit lg:max-w-3/5 max-w-4/5 motion-preset-fade motion-duration 3000">
                                 <h1 class="font-bold text-white">{!! $message['content'] !!}</h1>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                         <div class="flex justify-end"
                             wire:key="user-{{ $index }}"
                             x-init="$nextTick(() => { shouldAutoScroll = true; scrollToBottom(); })">
-                            <div class="p-4 bg-blue-100 user-chat rounded-xl w-fit lg:max-w-3/5 max-w-4/5">
+                            <div class="p-4 bg-blue-100 user-chat rounded-xl w-fit lg:max-w-3/5 max-w-4/5 motion-preset-fade motion-duration-200">
                                 <h1 class="font-bold text-black">{{ $message['content'] }}</h1>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="flex flex-row items-center justify-center w-full px-4 h-3/20 rounded-b-2xl">
-            <form wire:submit.prevent="send" x-on:submit.prevent class="flex flex-row w-full gap-4">
+            <form wire:submit.prevent="submit" class="flex flex-row w-full gap-4">
                 <input type="text"
                     placeholder="Tanya Apa Saja Mengenai Ternak Ikan"
                     wire:model="body"
@@ -42,8 +42,7 @@
                     class="w-full px-4 py-3 text-gray-600 placeholder-gray-400 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed">
                 <button type="submit"
                     wire:loading.attr="disabled"
-                    wire:click.prevent="send"
-                    x-on:click.prevent
+                    wire:click="submit"
                     class="p-4 bg-blue-400 container-btn rounded-xl disabled:opacity-50">
                     <div wire:loading.remove>
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
