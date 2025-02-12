@@ -13,7 +13,7 @@
 
 @section('content')
 <section class="flex flex-col items-center justify-start w-full min-h-screen bg-lightBlue">
-    @livewire('recommendation-livewire')
+    @livewire('marketplace-components')
 
     @if (session()->has('error'))
     <div class="fixed relative px-4 py-3 text-red-700 bg-red-100 border border-red-400 rounded bottom-4 right-4" role="alert">

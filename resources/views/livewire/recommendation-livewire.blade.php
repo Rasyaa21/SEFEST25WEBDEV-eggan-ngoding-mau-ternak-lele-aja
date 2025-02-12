@@ -3,7 +3,8 @@
     <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
         Kolam Cerdas
     </h1>
-    <div class="container justify-center w-full max-w-3/4 lg:max-w-1/3 lg:h-[450px] md:h-[400px] h-[450px] bg-white rounded-2xl shadow-2xl mt-12 motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md delay-100 p-6 flex flex-col">
+
+    <div class="container justify-center w-full max-w-3/4 lg:max-w-1/3 lg:h-[450px] md:h-[400px] h-[450px] bg-white rounded-2xl shadow-2xl mt-10 motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md delay-100 p-6 flex flex-col">
         <form wire:submit.prevent="submit" class="flex flex-col">
             <div class="mb-6">
                 <label for="fish" class="block mb-2 text-sm font-bold text-gray-700">Ikan Apa Yang Ingin Diternak</label>
