@@ -35,13 +35,24 @@
         return {
             shouldAutoScroll: true,
             lastScrollHeight: 0,
+            newMessage: false, 
+            userScrolledUp: false,
 
             initScroll() {
                 const container = this.$refs.chatContainer;
 
                 container.addEventListener('scroll', () => {
-                    const isScrolledToBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
-                    this.shouldAutoScroll = isScrolledToBottom;
+                    const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 10;
+
+                    this.shouldAutoScroll = isAtBottom;
+                    
+                    if (!isAtBottom) {
+                        this.userScrolledUp = true;
+                        this.newMessage = false;
+                    } else {
+                        this.userScrolledUp = false;
+                        this.newMessage = false;
+                    }
                 });
 
                 this.scrollToBottom();
@@ -50,8 +61,10 @@
             scrollToBottom() {
                 const container = this.$refs.chatContainer;
 
-                if (this.shouldAutoScroll) {
+                if (this.shouldAutoScroll && !this.userScrolledUp) {
                     container.scrollTop = container.scrollHeight;
+                } else {
+                    this.newMessage = true; // Tampilkan indikator bahwa ada pesan baru
                 }
 
                 this.lastScrollHeight = container.scrollHeight;

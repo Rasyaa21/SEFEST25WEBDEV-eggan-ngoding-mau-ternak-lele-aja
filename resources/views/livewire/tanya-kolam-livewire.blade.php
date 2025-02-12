@@ -16,7 +16,15 @@
                     @if($message['role'] === 'assistant')
                         <div class="flex justify-start" wire:key="assistant-{{ $index }}">
                             <div class="p-4 bg-primary user-chat rounded-xl w-fit lg:max-w-3/5 max-w-4/5 motion-preset-fade motion-duration 3000">
-                                <h1 class="font-bold text-white">{!! $message['content'] !!}</h1>
+                                @if(str_contains($message['content'], '1.'))
+                                    @foreach(explode("\n", $message['content']) as $line)
+                                        @if(trim($line))
+                                            <h1 class="mb-2 font-bold text-white">{!! $line !!}</h1>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <h1 class="font-bold text-white">{!! $message['content'] !!}</h1>
+                                @endif
                             </div>
                         </div>
                     @endif
