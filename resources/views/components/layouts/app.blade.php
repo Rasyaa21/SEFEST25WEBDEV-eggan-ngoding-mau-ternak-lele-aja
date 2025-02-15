@@ -4,8 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@yield('title', 'Page Title')</title>
-
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.js"></script>
         @vite('resources/css/app.css')
+        @include('sweetalert::alert')
         @livewireStyles
     </head>
     <body>
