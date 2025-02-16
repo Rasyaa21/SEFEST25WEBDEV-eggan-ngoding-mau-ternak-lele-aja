@@ -45,7 +45,7 @@
                         <tbody>
                             @if($ponds->isEmpty())
                             <tr>
-                                <td colspan="7" class="px-4 py-6 text-center text-gray-500">No entries found</td>
+                                <td colspan="7" class="px-4 py-6 text-center text-gray-500">Tidak Ada Data Kolam</td>
                             </tr>
                             @endif
                             @foreach($ponds as $pond)
@@ -107,7 +107,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form class="p-4 md:p-5" method="POST" id="update-form" action="{{ route('pantau.kolam.update', $pond->id) }}">
+                <form class="p-4 md:p-5" method="POST" id="update-form" action="{{ isset($pond) ? route('pantau.kolam.update', $pond->id) : '#' }}">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-2 gap-4 mb-4">

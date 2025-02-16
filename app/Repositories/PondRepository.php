@@ -32,30 +32,61 @@ class PondRepository implements PondRepositoryInterface{
             "height" => $req["height"]
         ]);
 
-        $prompt = trim("
-            Kamu adalah seorang peternak ikan profesional dengan pengalaman bertahun-tahun dalam budidaya ikan. 
-            Tugasmu adalah memantau kondisi kolam dan memberikan rekomendasi nilai parameter ideal untuk ikan jenis {$req['fish_type']}.
-            HARUS memberikan angka rekomendasi yang sesuai untuk jenis ikan ini, bukan menulis ulang data yang diberikan.
-            
-            Format output HARUS seperti berikut:
-            1. Suhu: [angka] °C (Rekomendasi suhu ideal untuk ikan jenis {$req['fish_type']})
-            2. pH Air: [angka] (Rekomendasi pH ideal)
-            3. Salinitas: [angka] ppt (Rekomendasi salinitas ideal)
-            4. Kadar Oksigen: [angka] mg/L (Rekomendasi kadar oksigen ideal)
-            Kondisi: good/bad (Penilaian kondisi kolam saat ini berdasarkan data)
-            Rekomendasi: [Berikan saran spesifik tentang perubahan yang perlu dilakukan untuk mencapai kondisi ideal budidaya ikan jenis {$req['fish_type']}] jelaskan secara rinci dan detail berikan step stepnya 
+        $prompt = "Kamu adalah seorang peternak ikan profesional dengan pengalaman bertahun-tahun dalam budidaya ikan.
 
-            Data kondisi kolam saat ini:
-            - Suhu: {$req['water_temp']} °C
-            - pH: {$req['ph_level']}
-            - Salinitas: {$req['salinity']} ppt
-            - oksigen: {$req['dissolved_oxygen']} mg/L
-            
-            Kolam memiliki ukuran {$req['length']} meter (panjang) x {$req['width']} meter (lebar) x {$req['height']} meter (tinggi).
-            Sistem pengelolaan kolam yang digunakan adalah {$req['management_type']}.
-            
-            Harap berikan output hanya dalam format di atas tanpa menambahkan penjelasan lain.
-        ");
+                Tugasmu adalah:
+                1. Menganalisis kondisi kolam yang diberikan
+                2. Memberikan nilai parameter IDEAL yang DIREKOMENDASIKAN (bukan mengulang input) untuk ikan jenis {$req['fish_type']}
+                3. Memberikan rekomendasi detail langkah-langkah perbaikan jika diperlukan
+
+                PENTING:
+                - Berikan nilai IDEAL yang direkomendasikan, JANGAN mengulang nilai input
+                - Rekomendasi harus detail minimal 3-4 poin
+                - Kondisi dianggap 'good' jika:
+                * Minimal 3 dari 4 parameter berada dalam rentang toleransi
+                * Toleransi yang diperbolehkan:
+                    - Suhu: ±2°C dari nilai ideal
+                    - pH: ±0.5 dari nilai ideal
+                    - Salinitas: ±1.5 ppt dari nilai ideal
+                    - Oksigen: ±1.5 mg/L dari nilai ideal
+                - Jika kurang dari 3 parameter dalam rentang toleransi, status 'Kondisi' adalah 'bad'
+
+                Format output yang WAJIB diikuti:
+                //start format output
+                Suhu: [tulis angka ideal sesuai jenis ikan, misal: 27] °C
+                pH Air: [tulis angka ideal sesuai jenis ikan, misal: 7.5]
+                Salinitas: [tulis angka ideal sesuai jenis ikan, misal: 5] ppt
+                Oksigen: [tulis angka ideal sesuai jenis ikan, misal: 6] mg/L
+                Kondisi: [tulis 'good' atau 'bad']
+                Rekomendasi: [minimal 3-4 poin detail langkah perbaikan]
+                //end format output
+
+                    Contoh output yang BENAR (jika input buruk):
+                    Suhu: 27 °C
+                    pH Air: 7.5
+                    Salinitas: 5 ppt  
+                    Oksigen: 6 mg/L
+                    Kondisi: bad
+                    Rekomendasi:
+                    1. Pasang 2 unit pemanas air 1000W dan atur ke suhu 27°C
+                    2. Tambahkan 3 aerator 100W di titik A, B, dan C kolam
+                    3. Tambahkan 50kg garam kualitas akuakultur secara bertahap (15kg/hari)
+                    4. Lakukan pengukuran parameter setiap 6 jam selama penyesuaian
+                    5. Pasang termometer digital dengan alarm untuk monitoring
+
+                    Data kondisi kolam saat ini:
+                    Suhu: {$req['water_temp']} °C
+                    pH: {$req['ph_level']}
+                    Salinitas: {$req['salinity']} ppt  
+                    Oksigen: {$req['dissolved_oxygen']} mg/L
+                    Kolam: {$req['length']} x {$req['width']} x {$req['height']} meter
+                    Sistem pengelolaan: {$req['management_type']}
+
+                    Parameter ideal umum (sesuaikan dengan jenis ikan):
+                    - Suhu: 25-30°C 
+                    - pH: 6.5-8.5
+                    - Salinitas: 5-5.5 ppt (air tawar = 0 ppt)
+                    - Oksigen: 5-8 mg/L";
 
         $prompt = preg_replace('/\s+/', ' ', $prompt);
 
@@ -69,27 +100,31 @@ class PondRepository implements PondRepositoryInterface{
         $responseContent = trim($response['choices'][0]['message']['content']);
         Log::info($responseContent);
 
+        if (preg_match('/Suhu:.*?(?=Data kondisi kolam|$)/s', $responseContent, $matches)) {
+            $responseContent = trim($matches[0]);
+        }
+
         $lines = explode("\n", $responseContent);
         $lines = array_map('trim', array_filter($lines));
-        
+
         $res = [
-            'recommended_temp' => '',
-            'recommended_ph' => '',
-            'recommended_salinity' => '',
-            'recommended_oxygen' => '',
-            'pond_status' => '',
-            'recommendation_notes' => ''
+            'recommended_temp' => 0.0,
+            'recommended_ph' => 0.0,
+            'recommended_salinity' => 0.0,
+            'recommended_oxygen' => 0.0,
+            'pond_status' => 'bad',
+            'recommendation_notes' => 'No recommendations available'
         ];
         
         foreach ($lines as $line) {
-            if (preg_match('/1\.\s*Suhu:\s*([\d.]+)\s*°C/', $line, $matches)) {
-                $res['recommended_temp'] = floatval($matches[1]);
-            } elseif (preg_match('/2\.\s*pH Air:\s*([\d.]+)\s*\(/', $line, $matches)) {
-                $res['recommended_ph'] = floatval($matches[1]);
-            } elseif (preg_match('/3\.\s*Salinitas:\s*([\d.]+)\s*ppt/', $line, $matches)) {
-                $res['recommended_salinity'] = floatval($matches[1]);
-            } elseif (preg_match('/4\.\s*Kadar Oksigen:\s*([\d.]+)\s*mg/', $line, $matches)) {
-                $res['recommended_oxygen'] = floatval($matches[1]);
+            if (preg_match('/Suhu:\s*([\d.-]+)\s*°C/', $line, $matches)) {
+            $res['recommended_temp'] = $matches[1];
+            } elseif (preg_match('/pH Air:\s*([\d.-]+)/', $line, $matches)) {
+            $res['recommended_ph'] = $matches[1];
+            } elseif (preg_match('/Salinitas:\s*([\d.-]+)\s*ppt/', $line, $matches)) {
+            $res['recommended_salinity'] = $matches[1];
+            } elseif (preg_match('/Oksigen:\s*([\d.-]+)\s*mg/', $line, $matches)) {
+            $res['recommended_oxygen'] = $matches[1];
             } elseif (preg_match('/Kondisi:\s*(good|bad)/i', $line, $matches)) {
             $res['pond_status'] = strtolower($matches[1]);
             }
@@ -112,7 +147,7 @@ class PondRepository implements PondRepositoryInterface{
 
         Log::info('Respons OpenAI:', $response->toArray());
         Log::info('Berhasil Generate');
-        $generatedText = $response['choices'][0]['message']['content'] ?? 'Tidak ada respons';
+        
         return [
             'res' => $res,
             'PondRecommendation' => $PondRecommendation
@@ -137,66 +172,101 @@ class PondRepository implements PondRepositoryInterface{
         $width = $pond->width; 
         $height = $pond->height;
 
-        $prompt = trim("
-            Kamu adalah seorang peternak ikan profesional dengan pengalaman bertahun-tahun dalam budidaya ikan. 
-            Tugasmu adalah memantau kondisi kolam dan memberikan rekomendasi nilai parameter ideal untuk ikan jenis {$fishType}.
-            SANGAT PENTING: Berikan nilai rekomendasi ideal yang BERBEDA dari nilai input. Nilai rekomendasi harus sesuai standar ideal untuk jenis ikan ini.
-            
-            Parameter kolam saat ini:
-            - Suhu saat ini: {$req['water_temp']} °C
-            - pH saat ini: {$req['ph_level']}
-            - Salinitas saat ini: {$req['salinity']} ppt
-            - Oksigen saat ini: {$req['dissolved_oxygen']} mg/L
-            
-            Format output HARUS seperti berikut:
-            1. Suhu: [angka] °C (Rekomendasi suhu ideal untuk ikan jenis {$fishType})
-            2. pH Air: [angka] (Rekomendasi pH ideal)
-            3. Salinitas: [angka] ppt (Rekomendasi salinitas ideal)
-            4. Kadar Oksigen: [angka] mg/L (Rekomendasi kadar oksigen ideal)
-            Kondisi: good/bad (Penilaian kondisi kolam berdasarkan parameter baru)
-            Rekomendasi: [Berikan saran spesifik berdasarkan perbandingan parameter baru dengan nilai ideal]
+        $prompt = "Kamu adalah seorang peternak ikan profesional dengan pengalaman bertahun-tahun dalam budidaya ikan.
 
-            Kolam memiliki ukuran {$length} meter (panjang) x {$width} meter (lebar) x {$height} meter (tinggi).
-            Sistem pengelolaan kolam yang digunakan adalah {$managementType}.
-            
-            Harap berikan output hanya dalam format di atas tanpa menambahkan penjelasan lain.
-        ");
+                Tugasmu adalah:
+                1. Menganalisis kondisi kolam yang diberikan
+                2. Memberikan nilai parameter IDEAL yang DIREKOMENDASIKAN (bukan mengulang input) untuk ikan jenis {$fishType}
+                3. Memberikan rekomendasi detail langkah-langkah perbaikan jika diperlukan
 
-        $prompt = preg_replace('/\s+/', ' ', $prompt);
+                PENTING:
+                - Berikan nilai IDEAL yang direkomendasikan, JANGAN mengulang nilai input
+                - Rekomendasi harus detail minimal 3-4 poin
+                - Kondisi dianggap 'good' jika:
+                * Minimal 3 dari 4 parameter berada dalam rentang toleransi
+                * Toleransi yang diperbolehkan:
+                    - Suhu: ±2°C dari nilai ideal
+                    - pH: ±0.5 dari nilai ideal
+                    - Salinitas: ±1.5 ppt dari nilai ideal
+                    - Oksigen: ±1.5 mg/L dari nilai ideal
+                - Jika kurang dari 3 parameter dalam rentang toleransi, status 'Kondisi' adalah 'bad'
+
+                Format output yang WAJIB diikuti:
+                //start format output
+                Suhu: [tulis angka ideal sesuai jenis ikan, misal: 27-29] °C
+                pH Air: [tulis angka ideal sesuai jenis ikan, misal: 7.5-8]
+                Salinitas: [tulis angka ideal sesuai jenis ikan, misal: 5-6] ppt
+                Oksigen: [tulis angka ideal sesuai jenis ikan, misal: 6-7] mg/L
+                Kondisi: [tulis 'good' atau 'bad']
+                Rekomendasi: [minimal 3-4 poin detail langkah perbaikan]
+                //end format output
+
+                    Contoh output yang BENAR (jika input buruk):
+                    Suhu: 27 °C
+                    pH Air: 7.5
+                    Salinitas: 5 ppt  
+                    Oksigen: 6 mg/L
+                    Kondisi: bad
+                    Rekomendasi:
+                    1. Pasang 2 unit pemanas air 1000W dan atur ke suhu 27°C
+                    2. Tambahkan 3 aerator 100W di titik A, B, dan C kolam
+                    3. Tambahkan 50kg garam kualitas akuakultur secara bertahap (15kg/hari)
+                    4. Lakukan pengukuran parameter setiap 6 jam selama penyesuaian
+                    5. Pasang termometer digital dengan alarm untuk monitoring
+                    
+                    Data kondisi kolam saat ini:
+                    Suhu: {$req['water_temp']} °C
+                    pH: {$req['ph_level']}
+                    Salinitas: {$req['salinity']} ppt  
+                    Oksigen: {$req['dissolved_oxygen']} mg/L
+                    Kolam: {$length} x {$width} x {$height} meter
+                    Sistem pengelolaan: {$managementType}
+
+                    Parameter ideal umum (sesuaikan dengan jenis ikan):
+                    - Suhu: 25-30°C 
+                    - pH: 6.5-8.5
+                    - Salinitas: 5-5.5 ppt (air tawar = 0 ppt)
+                    - Oksigen: 5-8 mg/L";
+
+        $prompt = trim(preg_replace(['/\s+/', '/\n\s*\n/'], [' ', "\n"], $prompt));
 
         $response = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'user', 'content' => $prompt]
+            ['role' => 'user', 'content' => $prompt]
             ]
         ]);
         
         $responseContent = trim($response['choices'][0]['message']['content']);
         Log::info($responseContent);
 
+        if (preg_match('/Suhu:.*?(?=Data kondisi kolam|$)/s', $responseContent, $matches)) {
+            $responseContent = trim($matches[0]);
+        }
+
         $lines = explode("\n", $responseContent);
         $lines = array_map('trim', array_filter($lines));
         
         $res = [
-            'recommended_temp' => '',
-            'recommended_ph' => '',
-            'recommended_salinity' => '',
-            'recommended_oxygen' => '',
-            'pond_status' => '',
-            'recommendation_notes' => ''
+            'recommended_temp' => 0.0,
+            'recommended_ph' => 0.0,
+            'recommended_salinity' => 0.0,
+            'recommended_oxygen' => 0.0,
+            'pond_status' => 'bad',
+            'recommendation_notes' => 'No recommendations available'
         ];
         
         foreach ($lines as $line) {
-            if (preg_match('/1\.\s*Suhu:\s*([\d.]+)/', $line, $matches)) {
-                $res['recommended_temp'] = floatval($matches[1]);
-            } elseif (preg_match('/2\.\s*pH Air:\s*([\d.]+)/', $line, $matches)) {
-                $res['recommended_ph'] = floatval($matches[1]);
-            } elseif (preg_match('/3\.\s*Salinitas:\s*([\d.]+)/', $line, $matches)) {
-                $res['recommended_salinity'] = floatval($matches[1]);
-            } elseif (preg_match('/4\.\s*Kadar Oksigen:\s*([\d.]+)/', $line, $matches)) {
-                $res['recommended_oxygen'] = floatval($matches[1]);
+            if (preg_match('/Suhu:\s*([\d.-]+)\s*°C/', $line, $matches)) {
+            $res['recommended_temp'] = $matches[1];
+            } elseif (preg_match('/pH Air:\s*([\d.-]+)/', $line, $matches)) {
+            $res['recommended_ph'] = $matches[1];
+            } elseif (preg_match('/Salinitas:\s*([\d.-]+)\s*ppt/', $line, $matches)) {
+            $res['recommended_salinity'] = $matches[1];
+            } elseif (preg_match('/Oksigen:\s*([\d.-]+)\s*mg/', $line, $matches)) {
+            $res['recommended_oxygen'] = $matches[1];
             } elseif (preg_match('/Kondisi:\s*(good|bad)/i', $line, $matches)) {
-                $res['pond_status'] = strtolower($matches[1]);
+            $res['pond_status'] = strtolower($matches[1]);
             }
         }
 

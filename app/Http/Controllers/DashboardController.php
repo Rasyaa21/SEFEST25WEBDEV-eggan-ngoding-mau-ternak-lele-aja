@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MarketplaceTransaction;
 use Illuminate\Http\Request;
+use App\Models\Pond;
+use App\Models\TransactionDetail;
 
 class DashboardController extends Controller
 {   
-    
     public function index(){
         $user = request()->session()->get('user');
-        return view('pages.admin.index', compact('user'));
+        $ponds = Pond::where("user_id", $user->id)->get();
+        $transactions = MarketplaceTransaction::where('user_id', $user->id)->get();
+        return view('pages.admin.index', compact('user', 'ponds', 'transactions'));
     }
 
-
-    public function hasilPantau(){
-        if (!session()->has('pond_data') || !session()->has('pond_result')) {
-            return redirect()->route('pantau.kolam');
-        }
-    
-        return view('pages.admin.hasil-pantau', compact('data', 'res'));
+    public function transactionHistory(){
+        $user = request()->session()->get('user');
+        $transactions = MarketplaceTransaction::where('user_id', $user->id)->get();
+        return view('pages.admin.transaction-hist', compact('user', 'transactions'));
     }
 }

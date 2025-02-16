@@ -84,7 +84,6 @@
             </h1>
             <div class="flex flex-col gap-6 p-4 lg:flex-row lg:p-8">
                 <div class="w-full lg:w-1/2 p-4 text-md font-bold text-white transition-all duration-300 ease-in-out rounded-lg {{ $condition === 'good' ? 'bg-primary' : 'bg-red-500' }}">
-                    {{ $res['recommendation_notes'] }}
                 @if(str_contains($res['recommendation_notes'], '1.'))
                     @foreach(explode("\n", $res['recommendation_notes']) as $line)
                         @if(trim($line))
