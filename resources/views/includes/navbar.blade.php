@@ -6,13 +6,6 @@
             <span class="self-center text-2xl font-semibold text-black dark:text-black">Marivora</span>
         </a>
         <div class="flex items-center gap-3 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-            @if (request()->session()->has('user'))
-                <a href="" class="px-2.5 py-2.5 text-sm font-medium text-center text-white rounded-3xl bg-primary transition-all duration-300 hover:bg-blue-800 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-gradient-to-r from-primary to-secondary dark:hover:bg-secondary dark:focus:ring-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>  
-                </a>
-            @endif
             <a href="{{ route('user.register') }}" class="px-5 py-2.5 text-sm font-medium text-center text-white rounded-3xl bg-primary transition-all duration-300 hover:bg-blue-800 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-gradient-to-r from-primary to-secondary dark:hover:bg-secondary dark:focus:ring-primary">
                 @if (request()->session()->has('user'))
                     Dashboard

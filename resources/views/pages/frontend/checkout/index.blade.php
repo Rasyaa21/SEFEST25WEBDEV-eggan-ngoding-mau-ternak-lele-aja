@@ -13,7 +13,7 @@
 
 @section('content')
 <section class="flex items-center justify-center min-h-screen p-6 bg-lightBlue">
-    <div class="w-full max-w-6xl p-8 mt-32 bg-white shadow-xl rounded-2xl">
+    <div class="w-full max-w-6xl p-8 mt-32 bg-white shadow-2xl rounded-2xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
 
         <!-- Judul Halaman -->
         <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Checkout Pesanan</h2>

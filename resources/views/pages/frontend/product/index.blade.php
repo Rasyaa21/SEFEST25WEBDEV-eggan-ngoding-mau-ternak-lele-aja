@@ -14,11 +14,11 @@
 @section('content')
 <section class="flex items-center justify-center min-h-screen p-6 bg-lightBlue">
     <div class="container px-4 py-10 mx-auto">
-        <div class="max-w-5xl mx-auto overflow-hidden transition-all duration-300 bg-white shadow-xl rounded-xl hover:shadow-2xl">
+        <div class="max-w-5xl mx-auto overflow-hidden transition-all duration-300 bg-white shadow-2xl rounded-2xl hover:shadow-2xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
             <div class="flex flex-col md:flex-row">
                 <div class="md:w-1/2">
                     <div class="aspect-[1/1]">
-                        <img src="{{$product->product_image}}" alt="{{$product->product_name}}" 
+                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{$product->product_name}}" 
                             class="object-cover w-full h-full transition-transform duration-500 hover:scale-105">
                     </div>
                 </div>

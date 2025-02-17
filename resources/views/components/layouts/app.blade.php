@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Page Title')</title>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script src="https://unpkg.com/flowbite@2.0.0/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @vite('resources/css/app.css')
     @include('sweetalert::alert')
     @livewireStyles

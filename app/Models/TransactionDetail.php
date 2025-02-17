@@ -19,6 +19,7 @@ class TransactionDetail extends Model
         'note',
         'redirect_url',
         'status',
+        'receipt_number'
     ];
 
     public function transactionDetail(){

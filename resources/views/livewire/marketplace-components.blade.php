@@ -29,7 +29,7 @@
         @foreach ($products as $product)
         <a href="product/{{$product->id}}" class="block w-full max-w-xs md:max-w-sm lg:w-1/6 lg:max-w-[200px] flex-grow rounded-xl overflow-hidden bg-white shadow-md hover:shadow-lg transition duration-300">
             <div class="relative">
-                <img src="{{$product->product_image}}" alt="Product Image" class="object-cover w-full h-40 md:h-48 rounded-t-xl">
+                <img src="{{ asset('storage/' . $product->product_image) }}" alt="Product Image" class="object-cover w-full h-40 md:h-48 rounded-t-xl">
                 <span class="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] md:text-[12px] font-semibold px-2 md:px-3 py-[2px] md:py-[3px] rounded-md shadow">
                     {{$product->category}}
                 </span>

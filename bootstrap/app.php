@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             '/midtrans/callback',
         ]);
         $middleware->append(StartSession::class);
+        $middleware->trustProxies(at: '*');
         // $middleware->append(EncryptCookies::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

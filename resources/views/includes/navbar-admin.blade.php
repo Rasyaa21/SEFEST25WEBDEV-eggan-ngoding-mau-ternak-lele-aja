@@ -160,6 +160,26 @@ document.addEventListener('alpine:init', () => {
               Transaction
             </a>
           </li>
+
+          <li>
+            <a
+              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-primary duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+              href="{{ route('home') }}"
+              @click="selected = (selected === 'Transaction' ? '':'Transaction')"
+              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Transaction') && (page === 'Transaction') }"
+              :class="page === 'Transaction' && 'bg-graydark'"
+            >
+            </svg>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+            </svg>
+            
+              </svg>
+
+              Back To Main
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

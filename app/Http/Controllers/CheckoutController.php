@@ -7,10 +7,7 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index($id, Request $request)
+    public function index($id)
     {
         $product = Product::find($id);
         if (!$product) {
