@@ -18,7 +18,7 @@ class TransactionDetail extends Model
         'phone_number',
         'note',
         'redirect_url',
-        'payment_status',
+        'status',
     ];
 
     public function transactionDetail(){

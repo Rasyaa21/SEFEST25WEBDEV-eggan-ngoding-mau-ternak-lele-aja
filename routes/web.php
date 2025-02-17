@@ -19,9 +19,7 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('/kolam-cerdas', [RekomChatController::class, 'index'])->name('page.kolam.cerdas');
     Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
-
-    Route::get('/kolam-cerdas', [RekomChatController::class, 'index'])->name('page.kolam.cerdas');
-    Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
+  
     Route::get('/marketplace', [MarketplaceTransactionController::class, 'index'])->name('page.marketplace');
     Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checkout');
     Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
@@ -46,6 +44,8 @@ Route::middleware(['web'])->group(function () {
             Route::get('/transactions', [DashboardController::class, 'transactionHistory'])->name('transaction.history');
             Route::get('/academy', [DashboardController::class, 'academy'])->name('academy.page');
             Route::get('/academy/{id}', [DashboardController::class, 'academyview'])->name('academy.view');
+
+            Route::get('product/{id}/checkout', [CheckoutController::class, 'index'])->name('product.checkout');
         });
     });
 });

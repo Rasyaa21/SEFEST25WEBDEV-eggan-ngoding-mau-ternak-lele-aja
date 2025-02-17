@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $user         = request()->session()->get('user');
-        $ponds        = Pond::where("user_id", $user->id)->get();
+  
+    public function index(){
+        $user = request()->session()->get('user');
+        $ponds = Pond::where("user_id", $user->id)->get();
         $transactions = TransactionDetail::where('user_id', $user->id)->get();
         return view('pages.admin.index', compact('user', 'ponds', 'transactions'));
     }
+  
     public function academy()
     {
         $user   = request()->session()->get('user');
@@ -29,9 +30,8 @@ class DashboardController extends Controller
         return view('pages.admin.academy-view', compact('videos'));
     }
 
-    public function transactionHistory()
-    {
-        $user         = request()->session()->get('user');
+    public function transactionHistory(){
+        $user = request()->session()->get('user');
         $transactions = TransactionDetail::where('user_id', $user->id)->get();
         return view('pages.admin.transaction-hist', compact('user', 'transactions'));
     }

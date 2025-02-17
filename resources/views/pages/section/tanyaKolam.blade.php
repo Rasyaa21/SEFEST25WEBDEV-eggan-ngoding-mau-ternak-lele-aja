@@ -2,8 +2,6 @@
 
 @section('title', 'Marivora - Tanya Kolam')
 
-
-
 @section('content')
 <section x-data class="flex flex-col items-center justify-start w-full min-h-screen bg-lightBlue">
     @livewire('tanya-kolam-livewire')
@@ -64,7 +62,7 @@
                 if (this.shouldAutoScroll && !this.userScrolledUp) {
                     container.scrollTop = container.scrollHeight;
                 } else {
-                    this.newMessage = true; // Tampilkan indikator bahwa ada pesan baru
+                    this.newMessage = true; 
                 }
 
                 this.lastScrollHeight = container.scrollHeight;
