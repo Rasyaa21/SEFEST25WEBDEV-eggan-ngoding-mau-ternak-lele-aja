@@ -12,36 +12,36 @@
 @endpush
 
 @section('content')
-<section class="flex justify-center items-center min-h-screen bg-lightBlue p-6">
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-6xl mt-32">
+<section class="flex items-center justify-center min-h-screen p-6 bg-lightBlue">
+    <div class="w-full max-w-6xl p-8 mt-32 bg-white shadow-xl rounded-2xl">
 
         <!-- Judul Halaman -->
-        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Checkout Pesanan</h2>
+        <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Checkout Pesanan</h2>
         <form method="POST" action="{{route('page.invoice.create')}}">
             @csrf
             <!-- Informasi Pengiriman -->
             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-700 mb-3">Informasi Pengiriman</h3>
-                <label class="block text-gray-700 font-medium mb-2">Nama Penerima</label>
-                <input name="receiver" type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4" placeholder="Masukkan nama penerima">
+                <h3 class="mb-3 text-lg font-semibold text-gray-700">Informasi Pengiriman</h3>
+                <label class="block mb-2 font-medium text-gray-700">Nama Penerima</label>
+                <input name="receiver" type="text" class="w-full p-3 mb-4 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Masukkan nama penerima">
 
-                <label class="block text-gray-700 font-medium mb-2">Nomor Telepon (081xxxxxxxxx)</label>
-                <input name="phone_number" type="number" class="w-full border border-gray-300 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4" placeholder="Masukkan nomor telepon">
+                <label class="block mb-2 font-medium text-gray-700">Nomor Telepon (081xxxxxxxxx)</label>
+                <input name="phone_number" type="number" class="w-full p-3 mb-4 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Masukkan nomor telepon">
                 <input name="amount" type="hidden" value="100000">
 
-                <label class="block text-gray-700 font-medium mb-2">Alamat Lengkap</label>
-                <textarea name="address" class="w-full border border-gray-300 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
+                <label class="block mb-2 font-medium text-gray-700">Alamat Lengkap</label>
+                <textarea name="address" class="w-full p-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
             </div>
 
             <!-- Catatan -->
             <div class="mb-6">
-                <label class="block text-gray-700 font-medium mb-2">Catatan (Opsional)</label>
-                <textarea name="note" class="w-full border border-gray-300 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="3" placeholder="Tambahkan catatan untuk pesanan..."></textarea>
+                <label class="block mb-2 font-medium text-gray-700">Catatan (Opsional)</label>
+                <textarea name="note" class="w-full p-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="3" placeholder="Tambahkan catatan untuk pesanan..."></textarea>
             </div>
 
             <!-- Metode Pembayaran -->
             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-700 mb-3">Metode Pembayaran</h3>
+                <h3 class="mb-3 text-lg font-semibold text-gray-700">Metode Pembayaran</h3>
                 <label class="flex items-center gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                     <input type="radio" name="payment" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
                     <span class="flex-1 text-gray-800">Qris (DANA, OVO, GoPay, ShopeePay, LinkAja, AstraPay)</span>
@@ -51,20 +51,19 @@
 
             <!-- Ringkasan Pesanan -->
             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-700 mb-3">Ringkasan Pesanan</h3>
+                <h3 class="mb-3 text-lg font-semibold text-gray-700">Ringkasan Pesanan</h3>
                 <div class="flex justify-between text-sm text-gray-600">
-                    <span>Pancingan</span>
-                    <span class="font-semibold">Rp 200.000</span>
+                    <span>{{ $product->product_name }}</span>
+                    <span>Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                 </div>
                 <hr class="my-3 border-gray-300">
                 <div class="flex justify-between text-lg font-bold text-gray-900">
                     <span>Total</span>
-                    <span>Rp 200.000</span>
+                    <span>Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                 </div>
             </div>
     
-            <!-- Tombol Konfirmasi -->
-            <button class="w-full bg-blue-600 text-white py-3 rounded-xl shadow-lg hover:bg-blue-700 transition duration-300 font-semibold text-lg">
+            <button class="w-full py-3 text-lg font-semibold text-white transition duration-300 shadow-lg bg-gradient-to-r from-primary to-secondary rounded-xl hover:bg-blue-700">
                 Konfirmasi & Bayar
             </button>
         </form>

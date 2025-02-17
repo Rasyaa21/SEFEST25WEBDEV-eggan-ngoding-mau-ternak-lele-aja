@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -11,7 +12,10 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('pages.frontend.checkout.index');
+        $user = request()->session()->get('user');
+        $product_id = request()->route('id');
+        $product = Product::where('id', $product_id)->first();
+        return view('pages.frontend.checkout.index', compact('user', 'product'));
     }
 
     /**

@@ -12,13 +12,13 @@ class DashboardController extends Controller
     public function index(){
         $user = request()->session()->get('user');
         $ponds = Pond::where("user_id", $user->id)->get();
-        $transactions = MarketplaceTransaction::where('user_id', $user->id)->get();
+        $transactions = TransactionDetail::where('user_id', $user->id)->get();
         return view('pages.admin.index', compact('user', 'ponds', 'transactions'));
     }
 
     public function transactionHistory(){
         $user = request()->session()->get('user');
-        $transactions = MarketplaceTransaction::where('user_id', $user->id)->get();
+        $transactions = TransactionDetail::where('user_id', $user->id)->get();
         return view('pages.admin.transaction-hist', compact('user', 'transactions'));
     }
 }

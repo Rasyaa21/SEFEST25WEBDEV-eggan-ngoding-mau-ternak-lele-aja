@@ -44,7 +44,7 @@
                             <td class="sticky left-0 px-4 py-3 bg-white">{{ $loop->iteration }}</td>
                             <td class="px-4 py-3">{{ $transaction->created_at->format('d M Y') }}</td>
                             <td class="px-4 py-3">{{ $transaction->invoice_number }}</td>
-                            <td class="px-4 py-3">Rp {{ number_format($transaction->total, 0, ',', '.') }}</td>
+                            <td class="px-4 py-3">Rp {{ number_format($transaction->amount, 0, ',', '.') }}</td>
                             <td class="px-4 py-3">
                                 <span class="px-2 py-1 text-xs text-white rounded-full 
                                     {{ $transaction->status === 'success' ? 'bg-green-500' : 

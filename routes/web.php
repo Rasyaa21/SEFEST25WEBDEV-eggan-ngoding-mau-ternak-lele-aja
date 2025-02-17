@@ -20,18 +20,15 @@ use App\Http\Middleware\AuthSession;
 Route::middleware(['web'])->group(function () {
     Route::get('/', [LandingController::class, 'index'])->name('home');
     Route::post('/register', [UserController::class, 'store'])->name('register.store');
-    
+
     Route::get('/kolam-cerdas', [RekomChatController::class, 'index'])->name('page.kolam.cerdas');
     Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
-
-Route::get('/kolam-cerdas', [RekomChatController::class, 'index'])->name('page.kolam.cerdas');
-Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
-Route::get('/marketplace', [MarketplaceTransactionController::class, 'index'])->name('page.marketplace');
-Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checkout');
-Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
-Route::get('/academy', [AcademyTransactionController::class, 'index'])->name('page.academy');
-Route::get('/order/{id}', [TransactionDetailController::class, 'viewOrder'])->name('page.order');
-Route::get('/test', [RekomChatController::class, 'testChatbot'])->name('test.chatbot');
+    Route::get('/marketplace', [MarketplaceTransactionController::class, 'index'])->name('page.marketplace');
+    Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checkout');
+    Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
+    Route::get('/academy', [AcademyTransactionController::class, 'index'])->name('page.academy');
+    Route::get('/order/{id}', [TransactionDetailController::class, 'viewOrder'])->name('page.order');
+    Route::get('/test', [RekomChatController::class, 'testChatbot'])->name('test.chatbot');
     Route::get('/register', [UserController::class, 'register'])->name('user.register');
     Route::get('/login', [UserController::class, 'login'])->name('user.login');
     Route::post('/login', [UserController::class, 'loginLogic'])->name('login.store');
@@ -47,6 +44,8 @@ Route::get('/test', [RekomChatController::class, 'testChatbot'])->name('test.cha
             Route::delete('/pond/{id}', [PondController::class, 'destroy'])->name('pantau.kolam.destroy');
 
             Route::get('/transactions', [DashboardController::class, 'transactionHistory'])->name('transaction.history');
+
+            Route::get('product/{id}/checkout', [CheckoutController::class, 'index'])->name('product.checkout');
         });
     });
 });
