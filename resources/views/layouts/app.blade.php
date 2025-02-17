@@ -14,6 +14,7 @@
     @stack('styles')
     @include('sweetalert::alert')
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://kit.fontawesome.com/c1cbeb7f83.js" crossorigin="anonymous"></script>
 </head>
 <body>
     @include('includes.navbar')

@@ -1,5 +1,39 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Page Title')</title>
+
+    @vite('resources/css/app.css')
+    @livewireStyles
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #1f2937;
+        }
+
+    </style>
+</head>
+<body>
+    @include('includes.navbar')
+    <div class="my-auto lg:mt-4 md:mt-4 sm:mt-16">
+        @yield('content')
+    </div>
+    @livewireScripts
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,4 +113,5 @@
             </div>
         </section>
     </footer>
+</body>
 </html>

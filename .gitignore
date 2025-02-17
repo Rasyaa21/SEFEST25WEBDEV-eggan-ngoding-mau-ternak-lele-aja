@@ -1,0 +1,54 @@
+# Laravel specific
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/*.log
+/storage/framework/
+/storage/logs/
+/bootstrap/cache/
+
+# Environment files
+.env
+
+# IDE / Editor specific
+*.vscode*
+*.idea*
+*.phpstorm.meta.php
+*.phpunit.result.cache
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Composer dependencies
+/composer.lock
+
+# NPM/Yarn dependencies
+/yarn.lock
+/package-lock.json
+
+# Laravel Telescope & Ignition logs
+/storage/telescope/
+/storage/ignition/
+
+# Backup & Deployment files
+*.bak
+*.swp
+
+# User uploaded content (optional, can be versioned if needed)
+/public/uploads/
+/public/files/
+
+# PHPUnit coverage reports
+/coverage/
+
+# Docker specific
+.docker/
+.dockerignore
+
+# Misc
+/node_modules/
+/npm-debug.log
+yarn-error.log

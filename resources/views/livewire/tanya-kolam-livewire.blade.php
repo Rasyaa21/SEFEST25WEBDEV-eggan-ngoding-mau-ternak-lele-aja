@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-start w-full min-h-screen"
+<div class="flex flex-col items-center justify-start w-full min-h-screen mb-12"
     x-data="chatComponent()"
     x-init="initScroll()"
     @chat-updated.window="$nextTick(() => scrollToBottom())">
@@ -8,10 +8,9 @@
     <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text animate-fade-in motion-translate-y-in-100 motion-blur-in-md">
         Tanya Kolam
     </h1>
-
-    <div class="container justify-start max-w-3/4 w-full lg:max-w-1/2 lg:h-[550px] md:h-[550px] h-[500px] bg-white rounded-2xl shadow-2xl mt-12 animate-slide-up flex flex-col motion-translate-y-in-100 motion-blur-in-md">
-        <div x-ref="chatContainer" class="flex-1 w-full p-4 overflow-y-scroll overscroll-y-contain rounded-t-2xl chat-messages">
-            <div class="flex flex-col space-y-4" wire:poll.5000ms>
+    <div class="container justify-start max-w-3/4 w-full lg:max-w-1/2 lg:h-[550px] md:h-[550px] h-[500px] bg-white rounded-2xl shadow-2xl mt-10 animate-slide-up flex flex-col motion-translate-y-in-100 motion-blur-in-md">
+        <div x-ref="chatContainer" class="flex-1 w-full p-4 overflow-y-scroll custom-scrollbar overscroll-y-contain rounded-t-2xl chat-messages">
+            <div class="flex flex-col space-y-4">
                 @foreach($messages as $index => $message)
                     @if($message['role'] === 'assistant')
                         <div class="flex justify-start" wire:key="assistant-{{ $index }}">
