@@ -108,7 +108,7 @@ document.addEventListener('alpine:init', () => {
           <li>
             <a
               class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-primary duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-              href=""
+              href="{{route('academy.page')}}"
               @click="selected = (selected === 'Academy' ? '':'Academy')"
               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Academy') && (page === 'Academy') }"
               :class="page === 'Academy' && 'bg-graydark'"

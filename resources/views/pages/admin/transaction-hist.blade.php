@@ -39,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($transactions as $transaction) --}}
+                    @forelse($transactions as $transaction) 
                         <tr class="bg-white border-b hover:bg-gray-50">
                             <td class="sticky left-0 px-4 py-3 bg-white">{{ $loop->iteration }}</td>
                             <td class="px-4 py-3">{{ $transaction->created_at->format('d M Y') }}</td>
@@ -53,7 +53,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3">
-                                <a href="#" class="inline-flex items-center p-2 text-white transition bg-green-500 rounded-lg hover:bg-green-600">
+                                <a href="/order/{{$transaction->invoice_number}}" class="inline-flex items-center p-2 text-white transition bg-green-500 rounded-lg hover:bg-green-600">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />

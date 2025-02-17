@@ -1,0 +1,5 @@
+<?php
+return [
+    'MIDTRANS_SERVER_KEY' => env('MIDTRANS_SERVER_KEY'),
+    'MIDTRANS_CLIENT_KEY' => env('MIDTRANS_CLIENT_KEY'),
+];

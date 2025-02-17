@@ -23,7 +23,7 @@
                 {{$product->description}}
             </p>
             <p class="text-4xl font-bold text-blue-600 mb-6">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-            <a href="lpmtpl" class="w-full md:w-auto bg-blue-600 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+            <a href="/checkout" class="w-full md:w-auto bg-blue-600 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition duration-300 transform hover:scale-105">
                 🛒 Beli Sekarang
             </a>
         </div>
