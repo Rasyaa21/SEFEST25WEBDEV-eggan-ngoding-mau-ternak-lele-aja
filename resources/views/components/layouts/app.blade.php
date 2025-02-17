@@ -34,6 +34,23 @@
         @yield('content')
     </div>
     @livewireScripts
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@yield('title', 'Page Title')</title>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.js"></script>
+        @vite('resources/css/app.css')
+        @include('sweetalert::alert')
+        @livewireStyles
+    </head>
+    <body>
+        @include('includes.navbar')
+        <div class="my-auto lg:mt-4 md:mt-4 sm:mt-16">
+            @yield('content')
+        </div>
+        @livewireScripts
+    </body>
     <footer>
         <section class="bg-white">
             <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">

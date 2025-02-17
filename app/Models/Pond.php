@@ -10,13 +10,15 @@ class Pond extends Model
         'user_id',
         'pond_name',
         'fish_type',
-        'pond_size',
         'management_type',
         'water_temp',
         'ph_level',
         'dissolved_oxygen',
         'salinity',
         'measurement_date',
+        'length',
+        'width',
+        'height'
     ];
 
     public function user(){

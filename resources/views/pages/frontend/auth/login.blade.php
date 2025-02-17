@@ -8,7 +8,8 @@
         <div class="flex flex-col items-center justify-center w-full h-full lg:px-16 lg:w-1/2 md:w-1/2 form-container lg:items-start md:items-start">
             <h1 class="text-3xl font-bold text-transparent lg:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text">Get Started</h1>
             <h3 class="mb-6 text-center text-gray-400 lg:text-start">Selamat Datang di Marivora - Solusi Untuk Para Peternak Ikan</h3>
-            <form class="w-full max-w-sm">
+            <form class="w-full max-w-sm" action="{{ route('login.store') }}" method="POST">
+                @csrf
                 <div class="mb-4">
                     <label for="email" class="block mb-2 text-sm font-bold text-gray-700">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email address" class="w-full px-3 py-2.5 leading-tight text-gray-700 border rounded-lg shadow appearance-none focus:outline-none focus:shadow-outline border-primary">
