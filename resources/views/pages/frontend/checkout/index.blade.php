@@ -19,6 +19,8 @@
         <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Checkout Pesanan</h2>
         <form method="POST" action="{{route('page.invoice.create')}}">
             @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="amount" value="{{ $product->price }}">
             <!-- Informasi Pengiriman -->
             <div class="mb-6">
                 <h3 class="mb-3 text-lg font-semibold text-gray-700">Informasi Pengiriman</h3>
@@ -27,7 +29,6 @@
 
                 <label class="block mb-2 font-medium text-gray-700">Nomor Telepon (081xxxxxxxxx)</label>
                 <input name="phone_number" type="number" class="w-full p-3 mb-4 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Masukkan nomor telepon">
-                <input name="amount" type="hidden" value="100000">
 
                 <label class="block mb-2 font-medium text-gray-700">Alamat Lengkap</label>
                 <textarea name="address" class="w-full p-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="3" placeholder="Masukkan alamat lengkap"></textarea>

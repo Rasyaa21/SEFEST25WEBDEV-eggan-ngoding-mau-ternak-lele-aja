@@ -15,95 +15,83 @@ class   TransactionDetailController extends Controller
     {
     }
     
-    public function create(Request $request)
-{
-    // Midtrans Configuration
-    \Midtrans\Config::$serverKey = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
-    \Midtrans\Config::$clientKey = "SB-Mid-client-AcN39HdcG6CVof4m";
-    \Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
-    \Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANITIZED', true);
-    \Midtrans\Config::$is3ds = env('MIDTRANS_IS_3DS', true);
-
-    $userId = "1";
-    $userEmail = "axel@gmail.com";
-    
-    if (!$userId) {
-        return response()->json(['error' => 'Anda harus login terlebih dahulu!'], 401);
-    }
-
-    try {
-        $validatedData = $request->validate([
-            'amount' => 'required|numeric',
-            'receiver' => 'required|string',
-            'address' => 'required|string',
-            'phone_number' => 'required|string',
-            'note' => 'nullable|string',
-        ]);
-
-        $invoiceFormat = "INV-" . date('ymd') . "-" . strtoupper(str()->random(5));
+                public function create(Request $request)
+        {
+            try {
+                $validatedData = $request->validate([
+                    'product_id' => 'required|exists:products,id',
+                    'amount' => 'required|numeric',
+                    'receiver' => 'required|string',
+                    'address' => 'required|string',
+                    'phone_number' => 'required|string',
+                    'note' => 'nullable|string',
+                ]);
         
-        // Setup Midtrans parameter
-        $params = [
-            'transaction_details' => [
-                'order_id' => $invoiceFormat,
-                'gross_amount' => $validatedData['amount']
-            ],
-            'customer_details' => [
-                'first_name' => $validatedData['receiver'],
-                'email' => $userEmail,
-                'phone' => $validatedData['phone_number'],
-                'billing_address' => [
-                    'address' => $validatedData['address']
-                ]
-            ],
-            'enabled_payments' => ['qris'],
-            'payment_type' => 'qris'
-        ];
-
-        try {
-            // Create Midtrans Transaction
-            $midtrans = new \Midtrans\Snap();
-            $snapResponse = $midtrans->createTransaction($params);
-            
-            if (!isset($snapResponse->redirect_url)) {
-                throw new \Exception('Redirect URL tidak ditemukan dari response Midtrans');
+                // Midtrans Configuration
+                \Midtrans\Config::$serverKey = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
+                \Midtrans\Config::$isProduction = false;
+                \Midtrans\Config::$isSanitized = true;
+                \Midtrans\Config::$is3ds = true;
+        
+                $orderId = "INV-" . time();
+                
+                // Tambahkan enabled_payments dengan berbagai metode pembayaran
+                $transactionDetails = [
+                    'transaction_details' => [
+                        'order_id' => $orderId,
+                        'gross_amount' => $validatedData['amount']
+                    ],
+                    'customer_details' => [
+                        'first_name' => $validatedData['receiver'],
+                        'phone' => $validatedData['phone_number'],
+                        'billing_address' => [
+                            'address' => $validatedData['address']
+                        ]
+                    ],
+                    'enabled_payments' => [
+                        'credit_card', 'mandiri_clickpay', 'cimb_clicks',
+                        'bca_klikbca', 'bca_klikpay', 'bri_epay',
+                        'echannel', 'permata_va',
+                        'bca_va', 'bni_va', 'bri_va',
+                        'other_va', 'gopay', 'indomaret',
+                        'alfamart', 'danamon_online', 'akulaku',
+                        'shopeepay', 'qris'
+                    ]
+                ];
+        
+                try {
+                    $snapToken = \Midtrans\Snap::createTransaction($transactionDetails);
+        
+                    if (!isset($snapToken->token)) {
+                        throw new \Exception('Snap token tidak ditemukan dari response Midtrans');
+                    }
+        
+                    // Save ke database
+                    $transaction = TransactionDetail::create([
+                        'user_id' => 1,
+                        'invoice_number' => $orderId,
+                        'snap_token' => $snapToken->token,
+                        'amount' => $validatedData['amount'],
+                        'due_date' => Carbon::now()->addHours(23),
+                        'invoice_date' => Carbon::now(),
+                        'receiver' => $validatedData['receiver'],
+                        'address' => $validatedData['address'],
+                        'phone_number' => $validatedData['phone_number'],
+                        'note' => $validatedData['note'] ?? null,
+                        'redirect_url' => $snapToken->redirect_url,
+                        'status' => 'pending'
+                    ]);
+        
+                    return redirect()->away($snapToken->redirect_url);
+                    
+                } catch (\Exception $e) {
+                    Log::error('Midtrans Error:', ['message' => $e->getMessage()]);
+                    return redirect()->back()->with('error', 'Gagal membuat transaksi: ' . $e->getMessage());
+                }
+            } catch (ValidationException $e) {
+                return redirect()->back()->withErrors($e->errors());
             }
-
-            // Save to database
-            $transaction = TransactionDetail::create([
-                'user_id' => $userId,
-                'invoice_number' => $invoiceFormat,
-                'snap_token' => null,
-                'amount' => $validatedData['amount'],
-                'due_date' => Carbon::now()->addHours(23),
-                'invoice_date' => Carbon::now(),
-                'receiver' => $validatedData['receiver'],
-                'address' => $validatedData['address'],
-                'phone_number' => $validatedData['phone_number'],
-                'note' => $validatedData['note'] ?? null,
-                'redirect_url' => $snapResponse->redirect_url,
-                'status' => 'pending'
-            ]);
-
-            // Redirect langsung ke Midtrans
-            return redirect()->away($snapResponse->redirect_url);
-            
-        } catch (\Exception $midtransError) {
-            Log::error('Midtrans API Error: ' . $midtransError->getMessage(), [
-                'params' => $params,
-                'trace' => $midtransError->getTraceAsString()
-            ]);
-            
-            return redirect()->back()->with('error', 'Gagal membuat transaksi pembayaran. Silakan coba lagi.');
         }
-
-    } catch (ValidationException $e) {
-        return redirect()->back()->withErrors($e->errors())->withInput();
-    } catch (\Exception $e) {
-        Log::error('Transaction Creation Error: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Terjadi kesalahan sistem. Silakan coba lagi.');
-    }
-}
 
     public function viewOrder($id)
     { 

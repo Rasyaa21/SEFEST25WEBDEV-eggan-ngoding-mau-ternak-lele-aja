@@ -21,7 +21,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
   
     Route::get('/marketplace', [MarketplaceTransactionController::class, 'index'])->name('page.marketplace');
-    Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checkout');
+    Route::any('/checkout/{id}', [CheckoutController::class, 'index'])->name('page.checkout');
     Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
     Route::get('/academy', [AcademyTransactionController::class, 'index'])->name('page.academy');
     Route::get('/order/{id}', [TransactionDetailController::class, 'viewOrder'])->name('page.order');
@@ -30,7 +30,8 @@ Route::middleware(['web'])->group(function () {
     Route::get('/login', [UserController::class, 'login'])->name('user.login');
     Route::post('/login', [UserController::class, 'loginLogic'])->name('login.store');
     Route::post('/createInvoice', [TransactionDetailController::class, 'create'])->name('page.invoice.create');
-    Route::post('/transaction/success', [TransactionDetailController::class, 'success'])->name('page.success');
+    Route::get('/transaction/success', [TransactionDetailController::class, 'success'])->name('page.success');
+    Route::post('/transaction/callback', [TransactionDetailController::class, 'callback'])->name('page.callback');
 
     Route::middleware([AuthSession::class])->group(function () {
         Route::prefix('dashboard')->group(function () {

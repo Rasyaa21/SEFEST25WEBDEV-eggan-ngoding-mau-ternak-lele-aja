@@ -10,12 +10,14 @@ class CheckoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id, Request $request)
     {
-        $user = request()->session()->get('user');
-        $product_id = request()->route('id');
-        $product = Product::where('id', $product_id)->first();
-        return view('pages.frontend.checkout.index', compact('user', 'product'));
+        $product = Product::find($id);
+        if (!$product) {
+            abort(404);
+        }
+        
+        return view('pages.frontend.checkout.index', compact('product'));
     }
 
     /**
