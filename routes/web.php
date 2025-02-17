@@ -31,7 +31,6 @@ Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checko
 Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
 Route::get('/academy', [AcademyTransactionController::class, 'index'])->name('page.academy');
 Route::get('/order/{id}', [TransactionDetailController::class, 'viewOrder'])->name('page.order');
-Route::post('/createInvoice', [TransactionDetailController::class, 'create'])->name('page.invoice.create');
 Route::get('/test', [RekomChatController::class, 'testChatbot'])->name('test.chatbot');
     Route::get('/register', [UserController::class, 'register'])->name('user.register');
     Route::get('/login', [UserController::class, 'login'])->name('user.login');

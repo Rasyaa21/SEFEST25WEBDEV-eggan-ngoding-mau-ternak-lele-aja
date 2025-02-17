@@ -43,10 +43,6 @@
                 </li>
                 <li class="w-full md:w-auto">
                     <a href="{{ route('page.marketplace') }}" class="block w-full px-3 py-2 text-gray-900 transition-colors duration-200 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Marketplace</a>
-                    <a href="#" class="block w-full px-3 py-2 text-gray-900 transition-all duration-300 rounded md:w-auto hover:text-primary md:p-0">Academy</a>
-                </li>
-                <li class="w-full md:w-auto">
-                    <a href="#" class="block w-full px-3 py-2 text-gray-900 transition-all duration-300 rounded md:w-auto hover:text-primary md:p-0">Marketplace</a>
                 </li>
             </ul>
         </div>
