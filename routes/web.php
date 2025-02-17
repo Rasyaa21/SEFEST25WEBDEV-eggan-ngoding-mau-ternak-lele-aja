@@ -30,6 +30,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/login', [UserController::class, 'login'])->name('user.login');
     Route::post('/login', [UserController::class, 'loginLogic'])->name('login.store');
     Route::post('/createInvoice', [TransactionDetailController::class, 'create'])->name('page.invoice.create');
+    Route::post('/transaction/success', [TransactionDetailController::class, 'success'])->name('page.success');
 
     Route::middleware([AuthSession::class])->group(function () {
         Route::prefix('dashboard')->group(function () {

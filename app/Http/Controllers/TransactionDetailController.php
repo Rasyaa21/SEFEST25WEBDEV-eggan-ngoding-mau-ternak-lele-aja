@@ -9,107 +9,105 @@ use Illuminate\Validation\ValidationException;
 use Midtrans\Config;
 use Midtrans\Snap;
 
-class TransactionDetailController extends Controller
+class   TransactionDetailController extends Controller
 {
     public function __construct()
     {
     }
     
     public function create(Request $request)
-    {
-        \Midtrans\Config::$serverKey    = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
-        \Midtrans\Config::$clientKey    = "SB-Mid-client-AcN39HdcG6CVof4m";
-        \Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
-        \Midtrans\Config::$isSanitized  = env('MIDTRANS_IS_SANITIZED', true);
-        \Midtrans\Config::$is3ds        = env('MIDTRANS_IS_3DS', true);
+{
+    // Midtrans Configuration
+    \Midtrans\Config::$serverKey = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
+    \Midtrans\Config::$clientKey = "SB-Mid-client-AcN39HdcG6CVof4m";
+    \Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+    \Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANITIZED', true);
+    \Midtrans\Config::$is3ds = env('MIDTRANS_IS_3DS', true);
 
-        $userId    = "1";              // Ambil user yang sedang login
-        $userEmail = "axel@gmail.com"; // Ambil user yang sedang login
-        if (! $userId) {
-            return response()->json(['error' => 'Anda harus login terlebih dahulu!'], 401);
-        }
-
-        $invoiceFormat = "INV-" . date('ymd') . "-" . strtoupper(str()->random(5));
-        $invoicedate   = Carbon::now();
-
-        try {
-            $duedate       = Carbon::now()->addHours(23);
-            $validatedData = $request->validate([
-                'amount'       => 'required|numeric',
-                'receiver'     => 'required|string',
-                'address'      => 'required|string',
-                'phone_number' => 'required|string',
-                'note'         => 'nullable|string',
-            ]);
-
-            $params = [
-                'transaction_details' => [
-                    'order_id'     => $invoiceFormat,
-                    'gross_amount' => $validatedData['amount'],
-                ],
-                'customer_details'    => [
-                    'first_name' => $validatedData['receiver'],
-                    'email'      => $userEmail,
-                    'phone'      => $validatedData['phone_number'],
-                ],
-            ];
-
-            // Coba ambil Snap Token dari Midtrans
-            try {
-                $snapToken   = Snap::getSnapToken($params);
-                $redirectUrl = "https://app.sandbox.midtrans.com/snap/v2/vtweb/" . $snapToken;
-            } catch (\Exception $midtransError) {
-                Log::error('Midtrans API Error: ' . $midtransError->getMessage(), [
-                    'params' => $params,
-                    'trace'  => $midtransError->getTraceAsString(),
-                ]);
-
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => 'Gagal mendapatkan Snap Token dari Midtrans!',
-                    'error'   => $midtransError->getMessage(),
-                ], 500);
-            }
-
-            // Simpan transaksi ke database
-            $transaction = TransactionDetail::create([
-                'user_id'        => $userId,
-                'invoice_number' => $invoiceFormat,
-                'snap_token'     => $snapToken,
-                'amount'         => $validatedData['amount'],
-                'due_date'       => $duedate,
-                'invoice_date'   => $invoicedate,
-                'receiver'       => $validatedData['receiver'],
-                'address'        => $validatedData['address'],
-                'phone_number'   => $validatedData['phone_number'],
-                'note'           => $validatedData['note'] ?? null,
-                'redirect_url'   => $redirectUrl,
-                'status'         => 'pending',
-            ]);
-            
-            return redirect()->route('page.order', ['id' => $invoiceFormat]);
-
-        } catch (ValidationException $e) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $e->validator->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Terjadi kesalahan saat membuat transaksi. Silakan coba lagi!',
-                'error-1' => $e->getMessage(),
-                'error-2' => $e->getTraceAsString(),
-            ], 500);
-        }
+    $userId = "1";
+    $userEmail = "axel@gmail.com";
+    
+    if (!$userId) {
+        return response()->json(['error' => 'Anda harus login terlebih dahulu!'], 401);
     }
 
+    try {
+        $validatedData = $request->validate([
+            'amount' => 'required|numeric',
+            'receiver' => 'required|string',
+            'address' => 'required|string',
+            'phone_number' => 'required|string',
+            'note' => 'nullable|string',
+        ]);
+
+        $invoiceFormat = "INV-" . date('ymd') . "-" . strtoupper(str()->random(5));
+        
+        // Setup Midtrans parameter
+        $params = [
+            'transaction_details' => [
+                'order_id' => $invoiceFormat,
+                'gross_amount' => $validatedData['amount']
+            ],
+            'customer_details' => [
+                'first_name' => $validatedData['receiver'],
+                'email' => $userEmail,
+                'phone' => $validatedData['phone_number'],
+                'billing_address' => [
+                    'address' => $validatedData['address']
+                ]
+            ],
+            'enabled_payments' => ['qris'],
+            'payment_type' => 'qris'
+        ];
+
+        try {
+            // Create Midtrans Transaction
+            $midtrans = new \Midtrans\Snap();
+            $snapResponse = $midtrans->createTransaction($params);
+            
+            if (!isset($snapResponse->redirect_url)) {
+                throw new \Exception('Redirect URL tidak ditemukan dari response Midtrans');
+            }
+
+            // Save to database
+            $transaction = TransactionDetail::create([
+                'user_id' => $userId,
+                'invoice_number' => $invoiceFormat,
+                'snap_token' => null,
+                'amount' => $validatedData['amount'],
+                'due_date' => Carbon::now()->addHours(23),
+                'invoice_date' => Carbon::now(),
+                'receiver' => $validatedData['receiver'],
+                'address' => $validatedData['address'],
+                'phone_number' => $validatedData['phone_number'],
+                'note' => $validatedData['note'] ?? null,
+                'redirect_url' => $snapResponse->redirect_url,
+                'status' => 'pending'
+            ]);
+
+            // Redirect langsung ke Midtrans
+            return redirect()->away($snapResponse->redirect_url);
+            
+        } catch (\Exception $midtransError) {
+            Log::error('Midtrans API Error: ' . $midtransError->getMessage(), [
+                'params' => $params,
+                'trace' => $midtransError->getTraceAsString()
+            ]);
+            
+            return redirect()->back()->with('error', 'Gagal membuat transaksi pembayaran. Silakan coba lagi.');
+        }
+
+    } catch (ValidationException $e) {
+        return redirect()->back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        Log::error('Transaction Creation Error: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Terjadi kesalahan sistem. Silakan coba lagi.');
+    }
+}
+
     public function viewOrder($id)
-    {
-
+    { 
         $transaction = TransactionDetail::where('invoice_number', $id)->first();
-
         if (! $transaction) {
             abort(404);
         } else {
@@ -119,7 +117,7 @@ class TransactionDetailController extends Controller
 
     public function callback(Request $request)
     {
-        $serverKey = env('MIDTRANS_SERVER_KEY');
+        $serverKey = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
         $hashedKey = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
         if ($hashedKey !== $request->signature_key) {
@@ -165,5 +163,9 @@ class TransactionDetailController extends Controller
         }
 
         return response()->json(['message' => 'Callback received successfully']);
+    }
+
+    public function success(){
+        return view('pages.frontend.checkout.success');
     }
 }
