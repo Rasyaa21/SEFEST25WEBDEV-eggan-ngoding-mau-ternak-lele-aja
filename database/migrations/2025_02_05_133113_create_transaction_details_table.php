@@ -13,11 +13,22 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('marketplace_transaction_id')->constrained('marketplace_transactions')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->integer('quantity');
-            $table->double('subtotal');
+            $table->unsignedBigInteger('user_id');
+            $table->string('invoice_number');
+            $table->string('snap_token');
+            $table->integer('amount');
+            $table->string('due_date');
+            $table->string('invoice_date');
+            $table->string('receiver', 126);
+            $table->string('address', 255);
+            $table->string('phone_number', 15);
+            $table->string('note', 255)->nullable();
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
+            $table->string('redirect_url');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

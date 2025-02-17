@@ -7,10 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionDetail extends Model
 {
     protected $fillable = [
-        'marketplace_transaction_id',
-        'product_id',
-        'quantity',
-        'subtotal'
+        'user_id',
+        'invoice_number',
+        'snap_token',
+        'amount',
+        'due_date',
+        'invoice_date',
+        'receiver',
+        'address',
+        'phone_number',
+        'note',
+        'redirect_url',
+        'payment_status',
     ];
 
     public function transactionDetail(){
