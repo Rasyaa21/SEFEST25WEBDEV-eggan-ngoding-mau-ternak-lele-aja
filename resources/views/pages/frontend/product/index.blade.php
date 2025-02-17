@@ -57,6 +57,17 @@
                 </div>
             </div>
         </div>
+        <div class="md:w-1/2 mt-8 md:mt-0 md:pl-12">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">{{$product->product_name}}</h2>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                {{$product->description}}
+            </p>
+            <p class="text-4xl font-bold text-blue-600 mb-6">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+            <a href="/checkout" class="w-full md:w-auto bg-blue-600 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+                🛒 Beli Sekarang
+            </a>
+        </div>
+    </div>
 </section>
 
 

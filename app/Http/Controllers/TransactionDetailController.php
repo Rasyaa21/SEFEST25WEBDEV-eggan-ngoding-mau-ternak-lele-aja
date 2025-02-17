@@ -13,18 +13,19 @@ class TransactionDetailController extends Controller
 {
     public function __construct()
     {
-        Config::$serverKey    = env('MIDTRANS_SERVER_KEY');
-        Config::$clientKey    = env('MIDTRANS_CLIENT_KEY');
-        Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
-        Config::$isSanitized  = env('MIDTRANS_IS_SANITIZED', true);
-        Config::$is3ds        = env('MIDTRANS_IS_3DS', true);
     }
-
+    
     public function create(Request $request)
     {
-        $userId = "1"; // Ambil user yang sedang login
+        \Midtrans\Config::$serverKey    = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
+        \Midtrans\Config::$clientKey    = "SB-Mid-client-AcN39HdcG6CVof4m";
+        \Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+        \Midtrans\Config::$isSanitized  = env('MIDTRANS_IS_SANITIZED', true);
+        \Midtrans\Config::$is3ds        = env('MIDTRANS_IS_3DS', true);
+
+        $userId    = "1";              // Ambil user yang sedang login
         $userEmail = "axel@gmail.com"; // Ambil user yang sedang login
-        if (!$userId) {
+        if (! $userId) {
             return response()->json(['error' => 'Anda harus login terlebih dahulu!'], 401);
         }
 
@@ -83,8 +84,9 @@ class TransactionDetailController extends Controller
                 'phone_number'   => $validatedData['phone_number'],
                 'note'           => $validatedData['note'] ?? null,
                 'redirect_url'   => $redirectUrl,
-                'status' => 'pending',
+                'status'         => 'pending',
             ]);
+            
             return redirect()->route('page.order', ['id' => $invoiceFormat]);
 
         } catch (ValidationException $e) {
@@ -102,12 +104,13 @@ class TransactionDetailController extends Controller
             ], 500);
         }
     }
+
     public function viewOrder($id)
     {
 
         $transaction = TransactionDetail::where('invoice_number', $id)->first();
 
-        if (!$transaction) {
+        if (! $transaction) {
             abort(404);
         } else {
             return view("pages.frontend.order.index", compact('transaction'));
@@ -124,10 +127,10 @@ class TransactionDetailController extends Controller
         }
 
         $transactionStatus = $request->transaction_status;
-        $orderId = $request->order_id;
-        $order = TransactionDetail::where('invoice_number', $orderId)->first();
+        $orderId           = $request->order_id;
+        $order             = TransactionDetail::where('invoice_number', $orderId)->first();
 
-        if (!$order) {
+        if (! $order) {
             return response()->json(['message' => 'Order not found'], 404);
         }
 

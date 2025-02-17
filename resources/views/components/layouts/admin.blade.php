@@ -15,7 +15,7 @@
         @livewireStyles
         @include('includes.header')
     </head>
-    <body class="dark:bg-boxdark-2 dark:text-bodydark">
+    <body class="dark:bg-boxdark-2 dark:text-bodydark bg-gray-50 dark:bg-lightBlue">
         <div class="flex h-screen overflow-hidden">
             @include('includes.navbar-admin')
             <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">

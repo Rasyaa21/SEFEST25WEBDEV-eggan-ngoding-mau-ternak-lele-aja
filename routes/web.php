@@ -1,21 +1,17 @@
 <?php
 use App\Http\Controllers\AcademyTransactionController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontend\LandingController;
+use App\Http\Controllers\MarketplaceTransactionController;
 use App\Http\Controllers\PondController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RekomChatController;
 use App\Http\Controllers\TanyaKolamController;
-use App\Http\Controllers\MarketplaceTransactionController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UserController;
-use App\Models\AcademyTransaction;
-use App\Models\MarketplaceTransaction;
-use App\Models\TransactionDetail;
-use Illuminate\Database\Events\TransactionBeginning;
 use App\Http\Middleware\AuthSession;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/', [LandingController::class, 'index'])->name('home');
@@ -23,6 +19,7 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('/kolam-cerdas', [RekomChatController::class, 'index'])->name('page.kolam.cerdas');
     Route::get('/tanya-kolam', [TanyaKolamController::class, 'index'])->name('page.tanya.kolam');
+  
     Route::get('/marketplace', [MarketplaceTransactionController::class, 'index'])->name('page.marketplace');
     Route::any('/checkout', [CheckoutController::class, 'index'])->name('page.checkout');
     Route::get('/product/{id}', [ProductController::class, 'index'])->name('page.product');
@@ -32,7 +29,8 @@ Route::middleware(['web'])->group(function () {
     Route::get('/register', [UserController::class, 'register'])->name('user.register');
     Route::get('/login', [UserController::class, 'login'])->name('user.login');
     Route::post('/login', [UserController::class, 'loginLogic'])->name('login.store');
-    
+    Route::post('/createInvoice', [TransactionDetailController::class, 'create'])->name('page.invoice.create');
+
     Route::middleware([AuthSession::class])->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -44,10 +42,11 @@ Route::middleware(['web'])->group(function () {
             Route::delete('/pond/{id}', [PondController::class, 'destroy'])->name('pantau.kolam.destroy');
 
             Route::get('/transactions', [DashboardController::class, 'transactionHistory'])->name('transaction.history');
+            Route::get('/academy', [DashboardController::class, 'academy'])->name('academy.page');
+            Route::get('/academy/{id}', [DashboardController::class, 'academyview'])->name('academy.view');
 
             Route::get('product/{id}/checkout', [CheckoutController::class, 'index'])->name('product.checkout');
         });
     });
 });
 
-Route::post('/midtrans/callback', [TransactionDetailController::class, 'callback'])->name('page.invoice.create');
