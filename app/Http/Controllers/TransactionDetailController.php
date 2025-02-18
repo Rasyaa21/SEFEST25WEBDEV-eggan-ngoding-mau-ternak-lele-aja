@@ -78,7 +78,6 @@ class   TransactionDetailController extends Controller
                     throw new \Exception('Snap token tidak ditemukan dari response Midtrans');
                 }
 
-                // Save ke database
                 $transaction = TransactionDetail::create([
                     'user_id' => $user->id,
                     'invoice_number' => $orderId,
@@ -116,21 +115,22 @@ class   TransactionDetailController extends Controller
 
     public function callback(Request $request)
     {
+        Log::info("test");
         $serverKey = "SB-Mid-server-zzOVDX4CerE9FBw903E57Qxw";
         $hashedKey = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
         if ($hashedKey !== $request->signature_key) {
             return response()->json(['message' => 'Invalid signature key'], 403);
         }
-
+        
         $transactionStatus = $request->transaction_status;
         $orderId           = $request->order_id;
         $order             = TransactionDetail::where('invoice_number', $orderId)->first();
-
+        
+        Log::info($transactionStatus);
         if (! $order) {
             return response()->json(['message' => 'Order not found'], 404);
         }
-        Log::info($transactionStatus);
         switch ($transactionStatus) {
             case 'capture':
                 if ($request->payment_type == 'credit_card') {
@@ -141,19 +141,19 @@ class   TransactionDetailController extends Controller
                     }
                 }
                 break;
-            case 'Settlement':
+            case 'settlement':
                 $order->update(['status' => 'success']);
                 break;
-            case 'Pending':
+            case 'pending':
                 $order->update(['status' => 'pending']);
                 break;
-            case 'Deny':
+            case 'deny':
                 $order->update(['status' => 'failed']);
                 break;
-            case 'Expire':
+            case 'expire':
                 $order->update(['status' => 'expired']);
                 break;
-            case 'Cancel':
+            case 'cancel':
                 $order->update(['status' => 'canceled']);
                 break;
             default:

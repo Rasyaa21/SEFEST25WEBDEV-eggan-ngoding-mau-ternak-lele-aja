@@ -14,15 +14,12 @@
 @section('content')
 <section class="flex items-center justify-center min-h-screen p-6 bg-lightBlue">
     <div class="w-full max-w-6xl p-8 mt-32 bg-white shadow-2xl rounded-2xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
-
-        <!-- Judul Halaman -->
         <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Checkout Pesanan</h2>
         <form method="POST" action="{{route('page.invoice.create')}}">
             @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="hidden" name="amount" value="{{ $product->price }}">
-            <!-- Informasi Pengiriman -->
             <div class="mb-6">
+                <input type="text" style="display:none;" name="product_id" value="{{ $product->id }}">
+                <input type="text" style="display:none;" name="amount" value="{{ $product->price }}">
                 <h3 class="mb-3 text-lg font-semibold text-gray-700">Informasi Pengiriman</h3>
                 <label class="block mb-2 font-medium text-gray-700">Nama Penerima</label>
                 <input name="receiver" type="text" class="w-full p-3 mb-4 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Masukkan nama penerima">
@@ -44,7 +41,7 @@
             <div class="mb-6">
                 <h3 class="mb-3 text-lg font-semibold text-gray-700">Metode Pembayaran</h3>
                 <label class="flex items-center gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="payment" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
+                    <input type="radio" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
                     <span class="flex-1 text-gray-800">Qris (DANA, OVO, GoPay, ShopeePay, LinkAja, AstraPay)</span>
                     <img class="w-24" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/2560px-Logo_QRIS.svg.png" alt="Bank Icon">
                 </label>
