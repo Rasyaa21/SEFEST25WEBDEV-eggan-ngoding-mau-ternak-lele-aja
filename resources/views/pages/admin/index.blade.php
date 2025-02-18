@@ -69,7 +69,13 @@
                     </div>
                     <div class="flex items-end justify-between mt-4">
                         <div>
-                            <h4 class="text-xl font-bold text-gray-900">{{ $user->is_premium ? 'Premium' : 'Free' }}</h4>
+                            <h4 class="text-xl font-bold text-gray-900">
+                                @if ($user->is_premium)
+                                    Premium
+                                @else 
+                                Premium
+                                @endif
+                            </h4>
                             <span class="text-sm text-gray-500">Member Status</span>
                         </div>
                     </div>
@@ -107,7 +113,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($transactions as $transaction)
+                    @forelse($transactions as $transaction) 
                         <tr class="bg-white border-b hover:bg-gray-50">
                             <td class="sticky left-0 px-4 py-3 bg-white">{{ $loop->iteration }}</td>
                             <td class="px-4 py-3">{{ $transaction->created_at->format('d M Y') }}</td>
@@ -116,7 +122,7 @@
                             <td class="px-4 py-3">
                                 <span class="px-2 py-1 text-xs text-white rounded-full 
                                     {{ $transaction->status === 'success' ? 'bg-green-500' : 
-                                    ($transaction->status === 'pending' ? 'bg-yellow-500' : 'bg-red-500') }}">
+                                    ($transaction->status === 'pending' ? 'bg-yellow-500' : 'bg-green-500') }}">
                                     {{ ucfirst($transaction->status) }}
                                 </span>
                             </td>
@@ -129,7 +135,7 @@
                                 </a>
                             </td>
                         </tr>
-                    @empty
+                        @empty
                         <tr>
                             <td colspan="6" class="px-4 py-6 text-center text-gray-500">Tidak ada transaksi ditemukan</td>
                         </tr>

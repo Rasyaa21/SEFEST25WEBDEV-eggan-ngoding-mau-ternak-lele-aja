@@ -5,6 +5,8 @@ use App\Models\Pond;
 use App\Models\PremiumContent;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class DashboardController extends Controller
 {

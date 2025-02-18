@@ -142,22 +142,22 @@ class   TransactionDetailController extends Controller
                 }
                 break;
             case 'settlement':
-                $order->update(['status' => 'success']);
+                $order->update(['status' => 'completed']);
                 break;
             case 'pending':
                 $order->update(['status' => 'pending']);
                 break;
             case 'deny':
-                $order->update(['status' => 'failed']);
+                $order->update(['status' => 'cancelled']);
                 break;
             case 'expire':
-                $order->update(['status' => 'expired']);
+                $order->update(['status' => 'cancelled']);
                 break;
             case 'cancel':
-                $order->update(['status' => 'canceled']);
+                $order->update(['status' => 'cancelled']);
                 break;
             default:
-                $order->update(['status' => 'unknown']);
+                $order->update(['status' => 'cancelled']);
                 break;
         }
         return response()->json(['message' => 'Callback received successfully']);

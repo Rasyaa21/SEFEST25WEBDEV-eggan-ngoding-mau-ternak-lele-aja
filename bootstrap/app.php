@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
             'createInvoice',
-            '/trasaction/callback',
+            '/transaction/callback',
         ]);
         $middleware->append(StartSession::class);
         $middleware->trustProxies(at: '*');

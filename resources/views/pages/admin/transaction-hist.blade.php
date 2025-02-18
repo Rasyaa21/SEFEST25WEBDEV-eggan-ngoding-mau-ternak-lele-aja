@@ -48,7 +48,7 @@
                             <td class="px-4 py-3">
                                 <span class="px-2 py-1 text-xs text-white rounded-full 
                                     {{ $transaction->status === 'success' ? 'bg-green-500' : 
-                                    ($transaction->status === 'pending' ? 'bg-yellow-500' : 'bg-red-500') }}">
+                                    ($transaction->status === 'pending' ? 'bg-yellow-500' : 'bg-green-500') }}">
                                     {{ ucfirst($transaction->status) }}
                                 </span>
                             </td>

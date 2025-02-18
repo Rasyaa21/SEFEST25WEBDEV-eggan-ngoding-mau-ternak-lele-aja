@@ -9,7 +9,6 @@
             Academy
         </h1>
         <div class="max-w-5xl p-8 mx-auto bg-white shadow-2xl rounded-3xl">
-            <!-- Tombol Kembali -->
             <a href="javascript:history.back()" class="flex items-center text-gray-600 transition duration-200 hover:text-gray-800">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
@@ -17,7 +16,6 @@
                 <span class="text-lg font-medium">Kembali</span>
             </a>
         
-            <!-- Kontainer Video -->
             <div class="mt-6 space-y-6">
                 <div class="w-full overflow-hidden bg-black shadow-lg aspect-video rounded-2xl">
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/{{$videos->video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

@@ -65,7 +65,7 @@
         <!-- Premium Overlay (Full Screen) -->
         @if(!auth()->user()->is_premium)
         <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-            <div class="max-w-md p-8 mx-4 text-center bg-white shadow-xl rounded-xl">
+            <div class="max-w-md p-8 mx-4 text-center bg-white shadow-2xl rounded-xl motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md">
                 <h3 class="mb-4 text-2xl font-bold text-gray-800">
                     Konten Premium
                 </h3>
