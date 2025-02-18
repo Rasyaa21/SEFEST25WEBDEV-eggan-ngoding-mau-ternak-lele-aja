@@ -29,11 +29,8 @@ class PremiumContentResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->required(),
-                    Forms\Components\FileUpload::make('video')
-                    ->label('Upload Video')
-                    ->maxSize(102400) 
-                    ->directory('videos')
-                    ->acceptedFileTypes(['video/mp4', 'video/avi', 'video/mkv'])
+                    Forms\Components\TextInput::make('video')
+                    ->label('Upload Youtube Link')
                     ->required(),
             ]);
     }

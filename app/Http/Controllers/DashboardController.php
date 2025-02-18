@@ -8,14 +8,13 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-  
     public function index(){
         $user = request()->session()->get('user');
         $ponds = Pond::where("user_id", $user->id)->get();
         $transactions = TransactionDetail::where('user_id', $user->id)->get();
         return view('pages.admin.index', compact('user', 'ponds', 'transactions'));
     }
-  
+    
     public function academy()
     {
         $user   = request()->session()->get('user');
